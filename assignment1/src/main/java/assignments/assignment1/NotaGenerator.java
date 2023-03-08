@@ -44,35 +44,8 @@ public class NotaGenerator {
                     System.out.print("Masukkan tanggal terima: ");
                     String tanggalTerima = input.nextLine();
 
-                    String[] paketTersedia = new String[]{"express", "fast", "reguler"};
-                    System.out.print("Masukkan paket laundry: ");
-                    String paketLaundry = input.nextLine();
-
-                    // Memastikan paket Laudry yang dipilih sudah sesuai dengan yang tersedia
-                    while (Arrays.stream(paketTersedia).noneMatch(paketLaundry.toLowerCase()::equals)) {
-                        if (paketLaundry.equals("?"))
-                            showPaket();
-                        else {
-                            System.out.println("Paket " + paketLaundry + " tidak diketahui");
-                            System.out.println("[ketik ? untuk mencari tahu jenis paket]");
-                        }
-                        System.out.print("Masukkan paket laundry: ");
-                        paketLaundry = input.nextLine();
-                    }
-
-                    System.out.print("Masukkan berat cucian Anda [Kg]: ");
-                    String beratCucianStr = input.nextLine();
-
-                    // Memastikan berat cucian dalam bentuk angka
-                    while (!beratCucianStr.matches("[0-9]+")) {
-                        System.out.println("Harap masukkan berat cucian Anda dalam bentuk bilangan positif");
-                        beratCucianStr = input.nextLine();
-                    }
-                    int beratCucian = Integer.parseInt(beratCucianStr);
-                    if (beratCucian < 2){
-                        System.out.println("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg");
-                        beratCucian = 2;
-                    }
+                    String paketLaundry = getPaket();
+                    int beratCucian = getBerat();
 
                     String notaPelanggan = generateNota(idPelanggan, paketLaundry, beratCucian, tanggalTerima);
                     System.out.println("Nota Laundry");
@@ -183,5 +156,52 @@ public class NotaGenerator {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return formatter.format(tanggalSelesai);
+    }
+
+    public static String getPaket(){
+        // Method untuk meminta input jenis paket
+        String[] paketTersedia = new String[]{"express", "fast", "reguler"};
+        System.out.println("Masukkan paket laundry: ");
+        String paketLaundry = input.nextLine();
+
+        // Memastikan paket Laudry yang dipilih sudah sesuai dengan yang tersedia
+        while (Arrays.stream(paketTersedia).noneMatch(paketLaundry.toLowerCase()::equals)) {
+            if (paketLaundry.equals("?"))
+                showPaket();
+            else {
+                System.out.println("Paket " + paketLaundry + " tidak diketahui");
+                System.out.println("[ketik ? untuk mencari tahu jenis paket]");
+            }
+            System.out.println("Masukkan paket laundry: ");
+            paketLaundry = input.nextLine();
+        }
+
+        return paketLaundry;
+    }
+
+    public static int getBerat(){
+        // Method untuk meminta berat pakaian
+        System.out.println("Masukkan berat cucian Anda [Kg]: ");
+        String beratCucianStr = input.nextLine();
+
+        int beratCucian;
+        while (true){
+            try{
+                beratCucian = Integer.parseInt(beratCucianStr);
+                if (!(beratCucian > 0))
+                    throw new NumberFormatException();
+                break;
+            } catch (NumberFormatException e){
+                System.out.println("Harap masukkan berat cucian Anda dalam bentuk bilangan positif");
+                beratCucianStr = input.nextLine();
+            }
+        }
+
+        if (beratCucian < 2){
+            System.out.println("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg");
+            beratCucian = 2;
+        }
+
+        return beratCucian;
     }
 }
