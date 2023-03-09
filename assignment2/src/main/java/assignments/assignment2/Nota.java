@@ -21,7 +21,7 @@ public class Nota {
         this.member = member;
         this.berat = berat;
         this.tanggalMasuk = tanggalMasuk;
-        this.sisaHariPengerjaan =getInfoPaket(paket)[1];
+        this.sisaHariPengerjaan =getInfoPaket(paket)[0];
         this.isReady = false;
 
         counter++;

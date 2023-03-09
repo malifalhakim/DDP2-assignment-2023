@@ -116,8 +116,8 @@ public class NotaGenerator {
     public static String generateNota(String id, String paket, int berat, String tanggalTerima,boolean discount){
         // Method yang mereturn string nota pelanggan
 
-        int hargaPerPaket = getInfoPaket(paket)[0];
-        int durasiPaket = getInfoPaket(paket)[1];
+        int hargaPerPaket = getInfoPaket(paket)[1];
+        int durasiPaket = getInfoPaket(paket)[0];
         String tanggalSelesai = getTanggalSelesai(durasiPaket,tanggalTerima);
         long totalHarga = hargaPerPaket * berat;
 
