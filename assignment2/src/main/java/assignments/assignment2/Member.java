@@ -1,8 +1,4 @@
 package assignments.assignment2;
-
-import assignments.assignment1.NotaGenerator;
-
-
 import static assignments.assignment1.NotaGenerator.generateId;
 
 public class Member {
@@ -19,7 +15,7 @@ public class Member {
         this.nama = nama;
         this.noHp = noHp;
         this.id = generateId(nama,noHp);
-        this.bonusCounter = 1;
+        this.bonusCounter = 0;
     }
 
     // TODO: tambahkan methods yang diperlukan untuk class ini

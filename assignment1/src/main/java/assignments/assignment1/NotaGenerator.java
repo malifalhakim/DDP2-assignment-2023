@@ -118,7 +118,7 @@ public class NotaGenerator {
         return strResult.substring(strResult.length() - 2);
     }
 
-    public static String generateNota(String id, String paket, int berat, String tanggalTerima){
+    public static String generateNota(String id, String paket, int berat, String tanggalTerima,boolean discount){
         // Method yang mereturn string nota pelanggan
 
         int durasiPaket;
@@ -135,16 +135,24 @@ public class NotaGenerator {
         }
 
         String tanggalSelesai = getTanggalSelesai(durasiPaket,tanggalTerima);
-        int totalHarga = hargaPerPaket * berat;
+        long totalHarga = hargaPerPaket * berat;
 
         String line1 = String.format("ID    : %s",id);
         String line2 = String.format("Paket : %s",paket);
         String line3 = "Harga :";
         String line4 = String.format("%d kg x %d = %d",berat,hargaPerPaket,totalHarga);
+        if (discount){
+            totalHarga = totalHarga / 2;
+            line4 += String.format(" = %d (Discount member 50%!!!)",totalHarga);
+        }
         String line5 = String.format("Tanggal Terima  : %s",tanggalTerima);
         String line6 = String.format("Tanggal Selesai : %s",tanggalSelesai);
 
         return line1 +"\n"+line2+"\n"+line3+"\n"+line4+"\n"+line5+"\n"+line6;
+    }
+
+    public static String generateNota(String id, String paket, int berat, String tanggalTerima){
+        return generateNota(id,paket,berat,tanggalTerima,false);
     }
 
     public static String getTanggalSelesai(int durasiPaket,String tanggalTerima){

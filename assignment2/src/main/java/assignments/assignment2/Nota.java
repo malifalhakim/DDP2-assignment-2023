@@ -1,7 +1,4 @@
 package assignments.assignment2;
-
-import assignments.assignment1.NotaGenerator.*;
-
 import static assignments.assignment1.NotaGenerator.generateNota;
 
 
@@ -30,6 +27,7 @@ public class Nota {
         this.isReady = false;
 
         counter++;
+        this.member.increaseBonusCount(1);
     }
 
     // TODO: tambahkan methods yang diperlukan untuk class ini
@@ -93,9 +91,9 @@ public class Nota {
     }
 
     public static int getHariPengerjaan(String paket){
-        if (paket.equals("express"))
+        if (paket.equalsIgnoreCase("express"))
             return 1;
-        else if (paket.equals("fast"))
+        else if (paket.equalsIgnoreCase("fast"))
             return 2;
         else
             return 3;
@@ -110,9 +108,17 @@ public class Nota {
             this.isReady = true;
     }
 
+    public boolean isDiscount(){
+        if(this.member.getBonusCounter() == 3){
+            this.member.setBonusCounter(0);
+            return true;
+        }
+        return false;
+    }
+
     public String toString(){
         String line1 = String.format("[ID Nota = %d]",this.idNote);
-        String line2 = generateNota(this.member.getId(),this.paket,this.berat,this.tanggalMasuk);
+        String line2 = generateNota(this.member.getId(),this.paket,this.berat,this.tanggalMasuk,this.isDiscount());
         String line3 = "Status          : " + this.getStatus();
         return line1+"\n"+line2+"\n"+line3;
     }

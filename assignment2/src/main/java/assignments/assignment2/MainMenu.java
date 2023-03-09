@@ -45,7 +45,7 @@ public class MainMenu {
 
         // Memastikan nomorHandphone hanya terdiri dari angka
         while (!nomorHandphone.matches("[0-9]+")) {
-            System.out.println("Field nomor hp hanya menerima digit");
+            System.out.println("Field nomor hp hanya menerima digit.");
             nomorHandphone = input.nextLine();
         }
 
@@ -54,7 +54,7 @@ public class MainMenu {
             System.out.println("Berhasil membuat member dengan ID " + member.getId() + "!");
             listMember.add(member);
         } else {
-            System.out.printf("Member dengan nama %s dan nomor hp %s sudah ada!",nama,nomorHandphone);
+            System.out.printf("Member dengan nama %s dan nomor hp %s sudah ada!\n",nama,nomorHandphone);
         }
 
     }
@@ -79,7 +79,7 @@ public class MainMenu {
             String paketLaundry = getPaket();
             int berat = getBerat();
             Nota notaPelanggan = new Nota(member,paketLaundry,berat,fmt.format(cal.getTime()));
-            System.out.println("Berhasil menambahkan Nota!");
+            System.out.println("Berhasil menambahkan nota!");
             listNota.add(notaPelanggan);
             System.out.println(notaPelanggan);
         } else {
@@ -94,8 +94,6 @@ public class MainMenu {
         }
         return null;
     }
-
-
 
     private static void handleListNota() {
         // TODO: handle list semua nota pada sistem
@@ -129,6 +127,7 @@ public class MainMenu {
                 break;
             } catch (NumberFormatException e){
                 System.out.println("ID nota berbentuk angka!");
+                idNotaStr = input.nextLine();
             }
         }
 
@@ -138,7 +137,6 @@ public class MainMenu {
         for (Nota nota:listNota){
             if (nota.getIdNote() == idNota){
                 if (nota.getIsReady()){
-                    nota.getMember().increaseBonusCount(1);
                     deletedNota = nota;
                     System.out.printf("Nota dengan ID %d berhasil diambil!\n",idNota);
 
