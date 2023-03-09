@@ -11,10 +11,7 @@ public class NotaGenerator {
         // Program utama yang mengatur semua alur program
 
         // Mencetak halaman input pilihan
-        printMenu();
-        System.out.print("Pilihan : ");
-        String pilihan = input.nextLine();
-        System.out.println("================================");
+        String pilihan = askPilihan();
 
         while (!pilihan.equals("0")) {
 
@@ -26,14 +23,7 @@ public class NotaGenerator {
                 System.out.print("Masukkan nama Anda: ");
                 String namaPelanggan = input.nextLine();
 
-                System.out.print("Masukkan nomor handphone Anda: ");
-                String nomorHandphone = input.nextLine();
-
-                // Memastikan nomorHandphone hanya terdiri dari angka
-                while (!nomorHandphone.matches("[0-9]+")) {
-                    System.out.println("Nomor hp hanya menerima digit");
-                    nomorHandphone = input.nextLine();
-                }
+                String nomorHandphone = askNomorHandphone();
 
                 String idPelanggan = generateId(namaPelanggan, nomorHandphone);
 
@@ -44,8 +34,8 @@ public class NotaGenerator {
                     System.out.print("Masukkan tanggal terima: ");
                     String tanggalTerima = input.nextLine();
 
-                    String paketLaundry = getPaket();
-                    int beratCucian = getBerat();
+                    String paketLaundry = askPaket();
+                    int beratCucian = askBerat();
 
                     String notaPelanggan = generateNota(idPelanggan, paketLaundry, beratCucian, tanggalTerima);
                     System.out.println("Nota Laundry");
@@ -55,10 +45,7 @@ public class NotaGenerator {
 
             // Menampilkan halaman input pilihan lagi
             System.out.println();
-            printMenu();
-            System.out.print("Pilihan : ");
-            pilihan = input.nextLine();
-            System.out.println("================================");
+            pilihan = askPilihan();
         }
 
         // Program telah berakhir dan keluar dari while loop
@@ -82,6 +69,14 @@ public class NotaGenerator {
         System.out.println("| Fast    | 2 Hari | 10000 / Kg |");
         System.out.println("| Reguler | 3 Hari |  7000 / Kg |");
         System.out.println("+-------------------------------+");
+    }
+
+    public static String askPilihan(){
+        printMenu();
+        System.out.print("Pilihan : ");
+        String pilihan = input.nextLine();
+        System.out.println("================================");
+        return pilihan;
     }
 
     public static String generateId(String nama, String nomorHP){
@@ -121,19 +116,8 @@ public class NotaGenerator {
     public static String generateNota(String id, String paket, int berat, String tanggalTerima,boolean discount){
         // Method yang mereturn string nota pelanggan
 
-        int durasiPaket;
-        int hargaPerPaket;
-        if (paket.equalsIgnoreCase("express")){
-            durasiPaket = 1;
-            hargaPerPaket = 12000;
-        }else if (paket.equalsIgnoreCase("fast")){
-            durasiPaket = 2;
-            hargaPerPaket = 10000;
-        } else {
-            durasiPaket = 3;
-            hargaPerPaket = 7000;
-        }
-
+        int hargaPerPaket = getInfoPaket(paket)[0];
+        int durasiPaket = getInfoPaket(paket)[1];
         String tanggalSelesai = getTanggalSelesai(durasiPaket,tanggalTerima);
         long totalHarga = hargaPerPaket * berat;
 
@@ -155,6 +139,22 @@ public class NotaGenerator {
         return generateNota(id,paket,berat,tanggalTerima,false);
     }
 
+    public static int[] getInfoPaket(String paket){
+        int durasiPaket;
+        int hargaPerPaket;
+        if (paket.equalsIgnoreCase("express")){
+            durasiPaket = 1;
+            hargaPerPaket = 12000;
+        }else if (paket.equalsIgnoreCase("fast")){
+            durasiPaket = 2;
+            hargaPerPaket = 10000;
+        } else {
+            durasiPaket = 3;
+            hargaPerPaket = 7000;
+        }
+        return new int[]{durasiPaket,hargaPerPaket};
+    }
+
     public static String getTanggalSelesai(int durasiPaket,String tanggalTerima){
         // Method untuk menghitung tanggal selesai laundry
 
@@ -166,7 +166,7 @@ public class NotaGenerator {
         return formatter.format(tanggalSelesai);
     }
 
-    public static String getPaket(){
+    public static String askPaket(){
         // Method untuk meminta input jenis paket
         String[] paketTersedia = new String[]{"express", "fast", "reguler"};
         System.out.println("Masukkan paket laundry: ");
@@ -187,7 +187,7 @@ public class NotaGenerator {
         return paketLaundry;
     }
 
-    public static int getBerat(){
+    public static int askBerat(){
         // Method untuk meminta berat pakaian
         System.out.println("Masukkan berat cucian Anda [Kg]: ");
         String beratCucianStr = input.nextLine();
@@ -211,5 +211,17 @@ public class NotaGenerator {
         }
 
         return beratCucian;
+    }
+
+    public static String askNomorHandphone(){
+        System.out.println("Masukkan nomor handphone Anda: ");
+        String nomorHandphone = input.nextLine();
+
+        // Memastikan nomorHandphone hanya terdiri dari angka
+        while (!nomorHandphone.matches("[0-9]+")) {
+            System.out.println("Nomor hp hanya menerima digit");
+            nomorHandphone = input.nextLine();
+        }
+        return nomorHandphone;
     }
 }

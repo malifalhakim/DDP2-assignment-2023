@@ -40,14 +40,7 @@ public class MainMenu {
         System.out.println("Masukkan nama Anda: ");
         String nama = input.nextLine();
 
-        System.out.println("Masukkan nomor handphone Anda:");
-        String nomorHandphone = input.nextLine();
-
-        // Memastikan nomorHandphone hanya terdiri dari angka
-        while (!nomorHandphone.matches("[0-9]+")) {
-            System.out.println("Field nomor hp hanya menerima digit.");
-            nomorHandphone = input.nextLine();
-        }
+        String nomorHandphone = askNomorHandphone();
 
         Member member = new Member(nama,nomorHandphone);
         if (isNewMember(member)){
@@ -76,8 +69,8 @@ public class MainMenu {
 
         Member member = getMember(id);
         if (!(member == null)){
-            String paketLaundry = getPaket();
-            int berat = getBerat();
+            String paketLaundry = askPaket();
+            int berat = askBerat();
             Nota notaPelanggan = new Nota(member,paketLaundry,berat,fmt.format(cal.getTime()));
             System.out.println("Berhasil menambahkan nota!");
             listNota.add(notaPelanggan);

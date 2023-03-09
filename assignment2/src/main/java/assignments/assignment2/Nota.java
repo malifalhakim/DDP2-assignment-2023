@@ -1,9 +1,9 @@
 package assignments.assignment2;
 import static assignments.assignment1.NotaGenerator.generateNota;
+import static assignments.assignment1.NotaGenerator.getInfoPaket;
 
 
 public class Nota {
-    // TODO: tambahkan attributes yang diperlukan untuk class ini
     // DataFields
     private int idNote;
     private String paket;
@@ -12,28 +12,23 @@ public class Nota {
     private String tanggalMasuk;
     private int sisaHariPengerjaan;
     private boolean isReady;
-
     private static int counter = 0;
 
     // Constructor
     public Nota(Member member, String paket, int berat, String tanggalMasuk) {
-        // TODO: buat constructor untuk class ini
         this.idNote = counter;
         this.paket = paket;
         this.member = member;
         this.berat = berat;
         this.tanggalMasuk = tanggalMasuk;
-        this.sisaHariPengerjaan =getHariPengerjaan(paket);
+        this.sisaHariPengerjaan =getInfoPaket(paket)[1];
         this.isReady = false;
 
         counter++;
         this.member.increaseBonusCount(1);
     }
 
-    // TODO: tambahkan methods yang diperlukan untuk class ini
     // Method
-
-
     public int getIdNote() {
         return idNote;
     }
@@ -90,14 +85,6 @@ public class Nota {
         this.isReady = ready;
     }
 
-    public static int getHariPengerjaan(String paket){
-        if (paket.equalsIgnoreCase("express"))
-            return 1;
-        else if (paket.equalsIgnoreCase("fast"))
-            return 2;
-        else
-            return 3;
-    }
     public String getStatus(){
         return (this.isReady)? "Sudah dapat diambil!" : "Belum bisa diambil :(";
     }
