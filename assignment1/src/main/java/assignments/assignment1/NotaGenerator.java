@@ -71,14 +71,6 @@ public class NotaGenerator {
         System.out.println("+-------------------------------+");
     }
 
-    public static String askPilihan(){
-        printMenu();
-        System.out.print("Pilihan : ");
-        String pilihan = input.nextLine();
-        System.out.println("================================");
-        return pilihan;
-    }
-
     public static String generateId(String nama, String nomorHP){
         // Method untuk mengenerate Id dari pelanggan
         // format namaDepan - nomorHP - CHECKSUM
@@ -127,7 +119,8 @@ public class NotaGenerator {
         String line4 = String.format("%d kg x %d = %d",berat,hargaPerPaket,totalHarga);
         if (discount){
             totalHarga = totalHarga / 2;
-            line4 += String.format(" = %d (Discount member 50%!!!)",totalHarga);
+            line4 += String.format(" = %d (Discount member 50",totalHarga);
+            line4 += "%!!!)";
         }
         String line5 = String.format("Tanggal Terima  : %s",tanggalTerima);
         String line6 = String.format("Tanggal Selesai : %s",tanggalSelesai);
@@ -140,6 +133,7 @@ public class NotaGenerator {
     }
 
     public static int[] getInfoPaket(String paket){
+        // Method yang mengembalikan array yang berisi durasiPaket dan hargaPerPaket
         int durasiPaket;
         int hargaPerPaket;
         if (paket.equalsIgnoreCase("express")){
@@ -214,6 +208,7 @@ public class NotaGenerator {
     }
 
     public static String askNomorHandphone(){
+        // Method untuk meminta nomor hp pelanggan
         System.out.println("Masukkan nomor handphone Anda: ");
         String nomorHandphone = input.nextLine();
 
@@ -223,5 +218,14 @@ public class NotaGenerator {
             nomorHandphone = input.nextLine();
         }
         return nomorHandphone;
+    }
+
+    public static String askPilihan(){
+        // Method untuk meminta pilihan dari menu
+        printMenu();
+        System.out.print("Pilihan : ");
+        String pilihan = input.nextLine();
+        System.out.println("================================");
+        return pilihan;
     }
 }

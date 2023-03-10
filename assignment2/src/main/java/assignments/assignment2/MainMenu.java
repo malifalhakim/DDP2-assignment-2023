@@ -35,11 +35,12 @@ public class MainMenu {
         System.out.println("Terima kasih telah menggunakan NotaGenerator!");
     }
 
+
     private static void handleGenerateUser() {
-        // TODO: handle generate user
         System.out.println("Masukkan nama Anda: ");
         String nama = input.nextLine();
 
+        // Meminta nomor handpohone sekaligus mengecek kevalid-annya
         String nomorHandphone = askNomorHandphone();
 
         Member member = new Member(nama,nomorHandphone);
@@ -52,8 +53,10 @@ public class MainMenu {
 
     }
 
+    /*
+     * Mengecek apakah member tersebut sudah ada atau belum
+     */
     public static boolean isNewMember(Member member){
-        // Mengecek apakah member tersebut member yang sudah ada atau tidak
         for (Member otherMember : listMember){
             if (member.equals(otherMember)){
                 return false;
@@ -63,14 +66,15 @@ public class MainMenu {
     }
 
     private static void handleGenerateNota() {
-        // TODO: handle ambil cucian
         System.out.println("Masukkan ID Member: ");
         String id = input.nextLine();
 
         Member member = getMember(id);
         if (!(member == null)){
+            // Meminta input paket dan berat sekaligus mengecek kevalid-annya
             String paketLaundry = askPaket();
             int berat = askBerat();
+
             Nota notaPelanggan = new Nota(member,paketLaundry,berat,fmt.format(cal.getTime()));
             System.out.println("Berhasil menambahkan nota!");
             listNota.add(notaPelanggan);
@@ -80,6 +84,9 @@ public class MainMenu {
         }
     }
 
+    /*
+     * Mencari member berdasarkan id yang dimasukkan
+     */
     public static Member getMember(String id){
         for (Member member : listMember){
             if (member.getId().equals(id))
@@ -89,15 +96,13 @@ public class MainMenu {
     }
 
     private static void handleListNota() {
-        // TODO: handle list semua nota pada sistem
         System.out.printf("Terdaftar %d nota dalam sistem.\n",listNota.size());
         for (Nota nota: listNota){
-            System.out.printf("- [%d] Status          : %s\n",nota.getIdNote(),nota.getStatus());
+            System.out.printf("- [%d] Status          : %s\n",nota.getIdNote(),nota.getPesanStatus());
         }
     }
 
     private static void handleListUser() {
-        // TODO: handle list semua user pada sistem
         System.out.printf("Terdaftar %d member dalam sistem.\n",listMember.size());
         for (Member member:listMember){
             System.out.printf("- %s : %s\n",member.getId(),member.getNama());
@@ -105,12 +110,10 @@ public class MainMenu {
     }
 
     private static void handleAmbilCucian() {
-        // TODO: handle ambil cucian
-        // Buang nota dengan id yang diminta dari listNota
         System.out.println("Masukan ID nota yang akan diambil:");
         String idNotaStr = input.nextLine();
 
-        // Validasi Input
+        // Validasi Input idNota
         int idNota;
         while (true){
             try{
@@ -124,16 +127,17 @@ public class MainMenu {
             }
         }
 
-        // Menghapus nota
+        // Mencari nota yang ingin dihapus dan mengeluarkannya dari listNota
         boolean isExist = false;
         Nota deletedNota = null;
         for (Nota nota:listNota){
             if (nota.getIdNote() == idNota){
-                if (nota.getIsReady()){
-                    deletedNota = nota;
+                if (nota.isReady()){
+                    deletedNota = nota; // Jika nota yang ingin dihapus sudah bisa diambil
                     System.out.printf("Nota dengan ID %d berhasil diambil!\n",idNota);
 
                 } else {
+                    // Jika nota yang ingin dihapus belum bisa diambil
                     System.out.printf("Nota dengan ID %d gagal diambil!\n",idNota);
                 }
                 isExist = true;
@@ -141,20 +145,19 @@ public class MainMenu {
         }
         if (!(deletedNota == null))
             listNota.remove(deletedNota);
-        if (!isExist)
+        if (!isExist) // Jika nota tidak ada di listNota
             System.out.printf("Nota dengan ID %d tidak ditemukan!\n",idNota);
 
     }
 
     private static void handleNextDay() {
-        // TODO: handle ganti hari
         System.out.println("Dek Depe tidur hari ini... zzz...");
 
         // Update tanggal sistem dan status nota
         cal.add(Calendar.DATE,1);
         for (Nota nota: listNota){
             nota.updateSisaPengerjaan(1);
-            if (nota.getIsReady())
+            if (nota.isReady())
                 System.out.printf("Laundry dengan nota ID %d sudah dapat diambil!\n",nota.getIdNote());
         }
 

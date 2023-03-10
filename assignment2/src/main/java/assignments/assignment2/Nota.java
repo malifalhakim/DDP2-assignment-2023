@@ -25,76 +25,38 @@ public class Nota {
         this.isReady = false;
 
         counter++;
+        // Meningkatkan bonus count setiap di generate Nota
         this.member.increaseBonusCount(1);
     }
 
-    // Method
+    // Methods
     public int getIdNote() {
         return idNote;
     }
 
-    public String getPaket() {
-        return paket;
-    }
-
-    public Member getMember() {
-        return member;
-    }
-
-    public int getBerat() {
-        return berat;
-    }
-
-    public String getTanggalMasuk() {
-        return tanggalMasuk;
-    }
-
-    public int getSisaHariPengerjaan() {
-        return sisaHariPengerjaan;
-    }
-
-    public boolean getIsReady() {
+    public boolean isReady() {
         return this.isReady;
     }
 
-    public void setIdNote(int idNote) {
-        this.idNote = idNote;
-    }
-
-    public void setPaket(String paket) {
-        this.paket = paket;
-    }
-
-    public void setMember(Member member) {
-        this.member = member;
-    }
-
-    public void setBerat(int berat) {
-        this.berat = berat;
-    }
-
-    public void setTanggalMasuk(String tanggalMasuk) {
-        this.tanggalMasuk = tanggalMasuk;
-    }
-
-    public void setSisaHariPengerjaan(int sisaHariPengerjaan) {
-        this.sisaHariPengerjaan = sisaHariPengerjaan;
-    }
-
-    public void setIsReady(boolean ready) {
-        this.isReady = ready;
-    }
-
-    public String getStatus(){
+    /*
+     * Me-return pesan yang sesuai untuk status nota yang sudah dapat diambil atau tidak
+     */
+    public String getPesanStatus(){
         return (this.isReady)? "Sudah dapat diambil!" : "Belum bisa diambil :(";
     }
 
+    /*
+     * Mengupdate status dari nota setelah berganti hari
+     */
     public void updateSisaPengerjaan(int banyakPenguranganHari){
         this.sisaHariPengerjaan = this.sisaHariPengerjaan - banyakPenguranganHari;
         if (this.sisaHariPengerjaan <= 0)
             this.isReady = true;
     }
 
+    /*
+     * Mengecek apakah member mendapatkan diskon untuk transaksi saat ini
+     */
     public boolean isDiscount(){
         if(this.member.getBonusCounter() == 3){
             this.member.setBonusCounter(0);
@@ -106,7 +68,7 @@ public class Nota {
     public String toString(){
         String line1 = String.format("[ID Nota = %d]",this.idNote);
         String line2 = generateNota(this.member.getId(),this.paket,this.berat,this.tanggalMasuk,this.isDiscount());
-        String line3 = "Status          : " + this.getStatus();
+        String line3 = "Status          : " + this.getPesanStatus();
         return line1+"\n"+line2+"\n"+line3;
     }
 }
