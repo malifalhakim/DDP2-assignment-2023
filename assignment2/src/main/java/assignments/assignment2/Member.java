@@ -1,43 +1,44 @@
 package assignments.assignment2;
-import static assignments.assignment1.NotaGenerator.generateId;
+
+import assignments.assignment1.NotaGenerator;
 
 public class Member {
-    // DataFields
     private String nama;
     private String noHp;
     private String id;
     private int bonusCounter;
 
-    // Constructor
     public Member(String nama, String noHp) {
         this.nama = nama;
         this.noHp = noHp;
-        this.id = generateId(nama,noHp);
-        this.bonusCounter = 0;
+        this.id = NotaGenerator.generateId(nama, noHp);
     }
 
-    // Method
-    public String getNama(){
-        return this.nama;
+    public String getNama() {
+        return nama;
     }
+
+    public String getNoHp() {
+        return noHp;
+    }
+
     public String getId() {
-        return this.id;
-    }
-    public int getBonusCounter() {
-        return this.bonusCounter;
-    }
-    public void setBonusCounter(int bonusCounter) {
-        this.bonusCounter = bonusCounter;
-    }
-    public void increaseBonusCount(int increment){
-        this.bonusCounter = this.bonusCounter + increment;
+        return id;
     }
 
-    /*
-     * Method yang mengecek apakah 2 member sama atau tidak
-     * 2 Member sama jika id mereka sama
-     */
-    public boolean equals(Member other){
-        return this.id.equals(other.id);
+    public void addBonusCounter(int i) {
+        bonusCounter += i;
+    }
+
+    public boolean isDiscount(){
+        if(bonusCounter == 3){
+            bonusCounter = 0;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean equals(String otherId) {
+        return otherId.equals(this.id);
     }
 }

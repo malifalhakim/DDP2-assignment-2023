@@ -1,74 +1,60 @@
 package assignments.assignment2;
-import static assignments.assignment1.NotaGenerator.generateNota;
-import static assignments.assignment1.NotaGenerator.getInfoPaket;
 
+import assignments.assignment1.NotaGenerator;
 
 public class Nota {
-    // DataFields
-    private int idNote;
-    private String paket;
+
+    private int idNota;
     private Member member;
+    private String paket;
     private int berat;
-    private String tanggalMasuk;
+    private String tanggalTerima;
     private int sisaHariPengerjaan;
-    private boolean isReady;
-    private static int counter = 0;
+    static public int totalNota;
 
-    // Constructor
-    public Nota(Member member, String paket, int berat, String tanggalMasuk) {
-        this.idNote = counter;
-        this.paket = paket;
+    private boolean isReady = false;
+
+    public Nota(Member member, String paket, int berat, String tanggalTerima) {
+        this.idNota = totalNota;
         this.member = member;
+        this.paket = paket;
         this.berat = berat;
-        this.tanggalMasuk = tanggalMasuk;
-        this.sisaHariPengerjaan =getInfoPaket(paket)[0];
-        this.isReady = false;
-
-        counter++;
-        // Meningkatkan bonus count setiap di generate Nota
-        this.member.increaseBonusCount(1);
+        this.tanggalTerima = tanggalTerima;
+        this.sisaHariPengerjaan = NotaGenerator.toHariPaket(paket);
+        totalNota++;
+        member.addBonusCounter(1);
     }
-
-    // Methods
-    public int getIdNote() {
-        return idNote;
+    public int getId() {
+        return idNota;
     }
 
     public boolean isReady() {
-        return this.isReady;
+        return isReady;
     }
 
-    /*
-     * Me-return pesan yang sesuai untuk status nota yang sudah dapat diambil atau tidak
-     */
-    public String getPesanStatus(){
-        return (this.isReady)? "Sudah dapat diambil!" : "Belum bisa diambil :(";
-    }
-
-    /*
-     * Mengupdate status dari nota setelah berganti hari
-     */
-    public void updateSisaPengerjaan(int banyakPenguranganHari){
-        this.sisaHariPengerjaan = this.sisaHariPengerjaan - banyakPenguranganHari;
-        if (this.sisaHariPengerjaan <= 0)
-            this.isReady = true;
-    }
-
-    /*
-     * Mengecek apakah member mendapatkan diskon untuk transaksi saat ini
-     */
-    public boolean isDiscount(){
-        if(this.member.getBonusCounter() == 3){
-            this.member.setBonusCounter(0);
-            return true;
+    public boolean toNextDay(){
+        sisaHariPengerjaan--;
+        if(sisaHariPengerjaan <= 0){
+            isReady = true;
         }
-        return false;
+        return isReady;
     }
 
-    public String toString(){
-        String line1 = String.format("[ID Nota = %d]",this.idNote);
-        String line2 = generateNota(this.member.getId(),this.paket,this.berat,this.tanggalMasuk,this.isDiscount());
-        String line3 = "Status          : " + this.getPesanStatus();
-        return line1+"\n"+line2+"\n"+line3;
+    public String getStatus() {
+        String message = isReady ? "Sudah dapat diambil!" : "Belum bisa diambil :(";
+        return "Status          : " + message;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("[ID Nota = %d]%n", idNota) + NotaGenerator.generateNota(member.getId(), paket, berat, tanggalTerima, member.isDiscount()) + "\n"
+                + getStatus();
+    }
+    public boolean equals(int idNota) {
+        return idNota == this.idNota;
+    }
+
+    public boolean equals(Nota nota) {
+        return equals(nota.getId());
     }
 }
