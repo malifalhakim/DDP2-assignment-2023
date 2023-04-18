@@ -158,6 +158,10 @@ public class NotaGenerator {
         return nota;
     }
 
+    public static String generateNota(String id, String paket, int berat, String tanggalTerima){
+        return generateNota(id,paket,berat,tanggalTerima,false);
+    }
+
     public static int toHariPaket(String paket) {
         paket = paket.toLowerCase();
         if (paket.equals("express"))
