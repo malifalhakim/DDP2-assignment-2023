@@ -31,7 +31,7 @@ public class MainMenu {
     }
 
     /**
-     * Menjalankan main menu.
+     *  Menjalankan main menu.
      */
     public void run() {
         boolean exit = false;
