@@ -6,6 +6,7 @@ import assignments.assignment3.user.menu.EmployeeSystem;
 import assignments.assignment3.user.menu.MemberSystem;
 import assignments.assignment3.user.menu.SystemCLI;
 
+
 public class LoginManager {
     private final EmployeeSystem employeeSystem;
     private final MemberSystem memberSystem;
@@ -41,6 +42,12 @@ public class LoginManager {
      */
     public Member register(String nama, String noHp, String password) {
         // TODO
+        String idMember = NotaGenerator.generateId(nama,noHp);
+        boolean hasExisted = memberSystem.isMemberExist(idMember);
+        if (!hasExisted){
+            return new Member(nama,idMember,password);
+        }
         return null;
     }
+
 }

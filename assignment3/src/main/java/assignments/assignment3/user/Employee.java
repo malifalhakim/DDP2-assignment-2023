@@ -15,6 +15,6 @@ public class Employee extends Member {
      */
     private static String generateId(String nama) {
         // TODO
-        return "";
+        return String.format("%s-%d",nama.split(" ")[0].toUpperCase(),employeeCount++);
     }
 }
