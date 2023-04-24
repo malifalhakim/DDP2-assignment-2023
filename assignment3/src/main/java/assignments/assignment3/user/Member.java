@@ -5,16 +5,20 @@ import assignments.assignment3.nota.Nota;
 import java.util.ArrayList;
 
 public class Member {
+    // Data Fields
     protected String id;
     protected String password;
     protected String nama;
-    protected ArrayList<Nota> notaList = new ArrayList<>();
+    protected ArrayList<Nota> notaList = new ArrayList<>(); // List nota laundry dari suatu pelanggan
 
+    // Constructor
     public Member(String nama, String id, String password) {
         this.nama = nama;
         this.id = id;
         this.password = password;
     }
+
+    // Methods
 
     /**
      * Method otentikasi member dengan ID dan password yang diberikan.
@@ -33,7 +37,6 @@ public class Member {
      * @param nota Nota object untuk ditambahkan.
      */
     public void addNota(Nota nota) {
-        // TODO
         this.notaList.add(nota);
     }
 
@@ -44,7 +47,6 @@ public class Member {
      * @return true jika ID dan password sesuai dengan instance member, false jika tidak.
      */
     protected boolean authenticate(String password) {
-        // TODO
         return password.equals(this.password);
     }
 

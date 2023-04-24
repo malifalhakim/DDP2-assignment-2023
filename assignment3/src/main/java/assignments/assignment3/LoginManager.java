@@ -41,11 +41,12 @@ public class LoginManager {
      * @return Member object yang berhasil mendaftar, return null jika gagal mendaftar.
      */
     public Member register(String nama, String noHp, String password) {
-        // TODO
         String idMember = NotaGenerator.generateId(nama,noHp);
-        boolean hasExisted = memberSystem.isMemberExist(idMember);
+        boolean hasExisted = memberSystem.isMemberExist(idMember); // Cek apakah ID tersebut telah ada atau tidak
         if (!hasExisted){
-            return new Member(nama,idMember,password);
+            Member member = new Member(nama,idMember,password);
+            memberSystem.addMember(member);
+            return member;
         }
         return null;
     }

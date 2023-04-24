@@ -98,7 +98,7 @@ public class MainMenu {
      * Menampilkan menu
      */
     private void displayMenu() {
-        System.out.println("Selamat datang di CuciCuci System!");
+        System.out.println("\nSelamat datang di CuciCuci System!");
         System.out.printf("Sekarang tanggal %s\n", fmt.format(cal.getTime()));
         System.out.println("1. Login");
         System.out.println("2. Register Member");

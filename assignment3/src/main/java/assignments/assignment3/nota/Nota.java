@@ -1,4 +1,5 @@
 package assignments.assignment3.nota;
+import assignments.assignment3.nota.service.CuciService;
 import assignments.assignment3.nota.service.LaundryService;
 import assignments.assignment3.user.Member;
 import java.util.ArrayList;
@@ -6,10 +7,11 @@ import java.util.ArrayList;
 import static assignments.assignment1.NotaGenerator.*;
 
 public class Nota {
+    // Data Fields
     private Member member;
     private String paket;
-    private ArrayList<LaundryService> services;
-    private long baseHarga;
+    private ArrayList<LaundryService> services; // List Service yang digunakan
+    private long baseHarga; // Harga per-kg dari setiap paket
     private int sisaHariPengerjaan;
     private  int berat;
     private int id;
@@ -18,8 +20,8 @@ public class Nota {
     private long hargaKompensasi;
     static public int totalNota;
 
+    // Constructor
     public Nota(Member member, int berat, String paket, String tanggal) {
-        //TODO
         this.member = member;
         this.berat = berat;
         this.paket = paket;
@@ -28,16 +30,27 @@ public class Nota {
         this.sisaHariPengerjaan = toHariPaket(paket);
         this.id = totalNota;
         this.baseHarga = toHargaPaket(paket);
+        this.addService(new CuciService()); // Setiap Nota yang dibuat memiliki service jenis Cuci
         totalNota++;
     }
 
+    // Methods
+
+    /**
+     * Menambahkan service (cuci/setrika/antar) pada nota yang dibuat
+     *
+     * @param service -> Jenis service yang ditambahkan pada nota
+     */
     public void addService(LaundryService service){
-        //TODO
         this.services.add(service);
     }
 
+    /**
+     * Mengerjakan service yang belum selesai pada nota
+     *
+     * @return String yang memberi tahu service yang sedang dikerjakan
+     */
     public String kerjakan(){
-        // TODO
         for (LaundryService service:this.services){
             if (!service.isDone()){
                 return service.doWork();
@@ -45,22 +58,26 @@ public class Nota {
         }
         return "Sudah selesai.";
     }
+
+    /**
+     * Mengupdate nota ke hari berikutnya
+     * Jika nota belum selesai sebelum tanggal yang seharusnya, diberikan uang kompensasi sebesar Rp.2000/hari
+     *
+     */
     public void toNextDay() {
-        // TODO
         this.sisaHariPengerjaan--;
-        if (this.sisaHariPengerjaan <= 0){
-            for (LaundryService service:this.services){
-                this.isDone = true & service.isDone();
-            }
-        }
-        if (this.sisaHariPengerjaan < 0){
+        if ((this.sisaHariPengerjaan < 0) && (this.getNotaStatus().equals("Belum selesai.")) ){
             this.hargaKompensasi += 2000;
         }
     }
 
+    /**
+     * Menghitung harga yang perlu dibayar member untuk suatu nota
+     *
+     * @return harga dalam long. harga merupakan penambahan semua service dan dikurangi harga kompensasi jika ada.
+     */
     public long calculateHarga(){
-        // TODO
-        long harga = (this.berat >= 2) ? this.baseHarga * this.berat: this.baseHarga * 2;
+        long harga = this.baseHarga * this.berat;
         for (LaundryService service:this.services){
             harga += service.getHarga(this.berat);
         }
@@ -68,10 +85,20 @@ public class Nota {
         return (harga >= 0)? harga: 0;
     }
 
+    /**
+     * Mengecek status nota. Jika semua service telah selesai maka nota telah selesai
+     *
+     * @return "Sudah selesai." jika status nota telah selesai. Jika belum mengembalikan "Belum selesai."
+     */
     public String getNotaStatus(){
-        // TODO
-        String message = this.isDone? "Sudah selesai.":"Belum selesai.";
-        return String.format("Nota %d: %s",this.id,message);
+        for (LaundryService service:this.services){
+            if (!service.isDone()){
+                this.isDone = false;
+                break;
+            }
+            this.isDone = true;
+        }
+        return (this.isDone) ? "Sudah selesai.":"Belum selesai.";
     }
 
     @Override
@@ -89,6 +116,7 @@ public class Nota {
         String messageHasilAkhir = (this.hargaKompensasi > 0) ?
                 String.format(" Ada kompensasi keterlambatan %d * 2000 hari",(this.hargaKompensasi / 2000)): "";
         result += messageHasilAkhir;
+        result += "\n";
         return result;
     }
 
@@ -111,6 +139,10 @@ public class Nota {
     }
     public boolean isDone() {
         return this.isDone;
+    }
+
+    public int getId() {
+        return this.id;
     }
 
     public LaundryService[] getServices(){

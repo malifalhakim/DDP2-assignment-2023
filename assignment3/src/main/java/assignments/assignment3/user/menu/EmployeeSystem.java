@@ -1,10 +1,10 @@
 package assignments.assignment3.user.menu;
 
 import assignments.assignment3.nota.Nota;
+import assignments.assignment3.nota.NotaManager;
 import assignments.assignment3.user.Employee;
 import assignments.assignment3.user.Member;
 
-import static assignments.assignment3.nota.NotaManager.notaList;
 
 public class EmployeeSystem extends SystemCLI {
 
@@ -29,16 +29,17 @@ public class EmployeeSystem extends SystemCLI {
     @Override
     protected boolean processChoice(int choice) {
         boolean logout = false;
-        Nota[] notaList = this.loginMember.getNotaList();
-        // TODO:
+        Nota[] notaList = NotaManager.notaList;
         if (choice == 1){
+            // Menampilkan pesan berupa service yang sedang dikerjakan pada nota
             System.out.printf("Stand back! %s beginning to nyuci!\n",this.loginMember.getNama());
-            for (int i = 0; i < notaList.length ; i++){
-                System.out.printf("Nota %d: %s\n",i,notaList[i].kerjakan());
+            for (Nota nota:notaList){
+                System.out.printf("Nota %d: %s\n",nota.getId(),nota.kerjakan());
             }
         } else if (choice == 2){
-            for (int i =0; i < notaList.length; i++){
-                System.out.printf("Nota %d: %s\n",i,notaList[i].getNotaStatus());
+            // Menampilkan status dari setiap nota
+            for (Nota nota:notaList){
+                System.out.printf("Nota %d: %s\n",nota.getId(),nota.getNotaStatus());
             }
         } else{
             logout = true;

@@ -1,11 +1,15 @@
 package assignments.assignment3.user;
 
 public class Employee extends Member {
+    // Data Fields
     public static int employeeCount;
+
+    // Constructor
     public Employee(String nama, String password) {
         super(nama, generateId(nama), password);
     }
 
+    // Methods
     /**
      * Membuat ID employee dari nama employee dengan format
      * NAMA_DEPAN-[jumlah employee, mulai dari 0]
@@ -14,7 +18,6 @@ public class Employee extends Member {
      * @param nama -> Nama lengkap dari employee
      */
     private static String generateId(String nama) {
-        // TODO
         return String.format("%s-%d",nama.split(" ")[0].toUpperCase(),employeeCount++);
     }
 }

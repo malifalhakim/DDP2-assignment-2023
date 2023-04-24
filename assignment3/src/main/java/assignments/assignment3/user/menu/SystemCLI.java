@@ -28,7 +28,7 @@ public abstract class SystemCLI {
         }
 
         System.out.println("Invalid ID or password.");
-    };
+    }
 
     /**
      * Memulai sesi pengguna dan menangani input.
@@ -67,7 +67,7 @@ public abstract class SystemCLI {
             return null;
         }
         return null;
-    };
+    }
 
     /**
      * Memeriksa apakah ada Member dengan ID yang diberikan.

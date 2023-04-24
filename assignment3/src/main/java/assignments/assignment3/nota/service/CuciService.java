@@ -1,23 +1,21 @@
 package assignments.assignment3.nota.service;
 
 public class CuciService implements LaundryService{
-    private static boolean hasWork;
+    private boolean hasWork;
     @Override
     public String doWork() {
-        // TODO
         hasWork = true;
         return "Sedang mencuci...";
     }
 
     @Override
     public boolean isDone() {
-        // TODO
         return hasWork;
     }
 
     @Override
     public long getHarga(int berat) {
-        // TODO
+        // Harga yang dikembalikan 0, karena harganya sama dengan harga dari paket yang dipilih
         return 0;
     }
 
