@@ -62,7 +62,6 @@ public class Nota {
     /**
      * Mengupdate nota ke hari berikutnya
      * Jika nota belum selesai sebelum tanggal yang seharusnya, diberikan uang kompensasi sebesar Rp.2000/hari
-     *
      */
     public void toNextDay() {
         this.sisaHariPengerjaan--;
@@ -103,7 +102,6 @@ public class Nota {
 
     @Override
     public String toString(){
-        // TODO
         String result = "";
         result += String.format("[ID Nota = %d]\n",this.id);
         result += generateNota(this.member.getId(),this.paket,this.berat,this.tanggalMasuk);
