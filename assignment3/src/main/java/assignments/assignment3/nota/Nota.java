@@ -26,7 +26,7 @@ public class Nota {
         this.berat = berat;
         this.paket = paket;
         this.tanggalMasuk = tanggal;
-        this.services = new ArrayList<LaundryService>();
+        this.services = new ArrayList<>();
         this.sisaHariPengerjaan = toHariPaket(paket);
         this.id = totalNota;
         this.baseHarga = toHargaPaket(paket);
@@ -51,12 +51,25 @@ public class Nota {
      * @return String yang memberi tahu service yang sedang dikerjakan
      */
     public String kerjakan(){
+        // Mengecek service yang sedang dikerjakan
+        String message = "Sudah selesai.";
         for (LaundryService service:this.services){
             if (!service.isDone()){
-                return service.doWork();
+                message = service.doWork();
+                break;
             }
         }
-        return "Sudah selesai.";
+
+        // Mengecek apakah semua service telah selesai atau tidak
+        this.isDone = true;
+        for (LaundryService service:this.services){
+            if (!service.isDone()){
+                this.isDone = false;
+                break;
+            }
+
+        }
+        return String.format("Nota %d : %s",this.id,message);
     }
 
     /**
@@ -65,7 +78,7 @@ public class Nota {
      */
     public void toNextDay() {
         this.sisaHariPengerjaan--;
-        if ((this.sisaHariPengerjaan < 0) && (this.getNotaStatus().equals("Belum selesai.")) ){
+        if ((this.sisaHariPengerjaan < 0) && (!this.isDone) ){
             this.hargaKompensasi += 2000;
         }
     }
@@ -90,20 +103,15 @@ public class Nota {
      * @return "Sudah selesai." jika status nota telah selesai. Jika belum mengembalikan "Belum selesai."
      */
     public String getNotaStatus(){
-        for (LaundryService service:this.services){
-            if (!service.isDone()){
-                this.isDone = false;
-                break;
-            }
-            this.isDone = true;
-        }
-        return (this.isDone) ? "Sudah selesai.":"Belum selesai.";
+        String message = (this.isDone) ? "Sudah selesai.":"Belum selesai.";
+        return String.format("Nota %d : %s",this.id,message);
     }
 
     @Override
     public String toString(){
-        String result = "";
-        result += String.format("[ID Nota = %d]\n",this.id);
+        String result;
+        result = String.format("[ID Nota = %d]",this.id);
+        result += "\n";
         result += generateNota(this.member.getId(),this.paket,this.berat,this.tanggalMasuk);
         result += "\n";
         result += "--- SERVICE LIST ---\n";
@@ -135,12 +143,9 @@ public class Nota {
     public int getSisaHariPengerjaan(){
         return this.sisaHariPengerjaan;
     }
+
     public boolean isDone() {
         return this.isDone;
-    }
-
-    public int getId() {
-        return this.id;
     }
 
     public LaundryService[] getServices(){

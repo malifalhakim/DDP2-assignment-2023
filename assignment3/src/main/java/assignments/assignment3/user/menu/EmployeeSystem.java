@@ -34,15 +34,17 @@ public class EmployeeSystem extends SystemCLI {
             // Menampilkan pesan berupa service yang sedang dikerjakan pada nota
             System.out.printf("Stand back! %s beginning to nyuci!\n",this.loginMember.getNama());
             for (Nota nota:notaList){
-                System.out.printf("Nota %d: %s\n",nota.getId(),nota.kerjakan());
+                System.out.println(nota.kerjakan());
             }
         } else if (choice == 2){
             // Menampilkan status dari setiap nota
             for (Nota nota:notaList){
-                System.out.printf("Nota %d: %s\n",nota.getId(),nota.getNotaStatus());
+                System.out.println(nota.getNotaStatus());
             }
-        } else{
+        } else if (choice == 3){
             logout = true;
+        } else {
+            System.out.println("Pilihan tidak valid, silahkan coba lagi.");
         }
         return logout;
     }

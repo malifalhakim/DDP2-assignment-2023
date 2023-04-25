@@ -151,9 +151,9 @@ public class NotaGenerator {
         if (discount) {
             nota += String.format(" = %d (Discount member 50%%!!!)", (berat * toHargaPaket(paket)/2));
         }
-        nota += "\nTanggal Terima  : " + tanggalTerima + "\n";
+        nota += "\ntanggal terima  : " + tanggalTerima + "\n";
         cal.add(Calendar.DATE, toHariPaket(paket));
-        nota += "Tanggal Selesai : " + formatter.format(cal.getTime());
+        nota += "tanggal selesai : " + formatter.format(cal.getTime());
 
         return nota;
     }

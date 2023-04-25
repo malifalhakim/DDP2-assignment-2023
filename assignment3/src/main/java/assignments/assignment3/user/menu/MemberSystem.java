@@ -56,12 +56,14 @@ public class MemberSystem extends SystemCLI {
         } else if (choice == 2){
             // Mem-print detail dari setiap nota dari member yang telah login
             Nota[] notaMember = this.loginMember.getNotaList();
-            for (Nota nota:notaList){
+            for (Nota nota:notaMember){
                 System.out.println(nota);
             }
 
-        } else {
+        } else if (choice == 3) {
             logout = true;
+        } else{
+            System.out.println("Pilihan tidak valid, silahkan coba lagi.");
         }
 
         return logout;
