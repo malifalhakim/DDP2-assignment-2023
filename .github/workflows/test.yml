@@ -21,8 +21,8 @@ jobs:
         with:
           gradle-version: 7.3.3
           arguments: build -x test
-      - name: Test Assignment 1
+      - name: Test Assignment 3
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           gradle-version: 7.3.3
-          arguments: :assignment1:test
+          arguments: :assignment3:test
