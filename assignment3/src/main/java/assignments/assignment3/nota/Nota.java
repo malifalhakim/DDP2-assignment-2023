@@ -28,10 +28,9 @@ public class Nota {
         this.tanggalMasuk = tanggal;
         this.services = new ArrayList<>();
         this.sisaHariPengerjaan = toHariPaket(paket);
-        this.id = totalNota;
+        this.id = totalNota++;
         this.baseHarga = toHargaPaket(paket);
         this.addService(new CuciService()); // Setiap Nota yang dibuat memiliki service jenis Cuci
-        totalNota++;
     }
 
     // Methods
@@ -110,8 +109,7 @@ public class Nota {
     @Override
     public String toString(){
         String result;
-        result = String.format("[ID Nota = %d]",this.id);
-        result += "\n";
+        result = String.format("[ID Nota = %d]\n",this.id);
         result += generateNota(this.member.getId(),this.paket,this.berat,this.tanggalMasuk);
         result += "\n";
         result += "--- SERVICE LIST ---\n";

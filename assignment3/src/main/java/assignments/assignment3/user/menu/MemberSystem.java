@@ -37,14 +37,14 @@ public class MemberSystem extends SystemCLI {
                     "Hanya tambah 1000 / kg :0\n" +
                     "[Ketik x untuk tidak mau]: ");
             String pilihan = in.nextLine();
-            if (!pilihan.equals("x"))
+            if (!pilihan.equalsIgnoreCase("x"))
                 notaMember.addService(new SetrikaService());
 
             System.out.print("Mau diantar oleh kurir kami? Dijamin aman dan cepat sampai tujuan!\n" +
                     "Cuma 2000 / 4kg, kemudian 500 / kg\n" +
                     "[Ketik x untuk tidak mau]: ");
             pilihan = in.nextLine();
-            if (!pilihan.equals("x")){
+            if (!pilihan.equalsIgnoreCase("x")){
                 notaMember.addService(new AntarService());
             }
 
