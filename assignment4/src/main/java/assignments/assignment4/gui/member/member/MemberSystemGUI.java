@@ -36,6 +36,8 @@ public class MemberSystemGUI extends AbstractMemberGUI {
     protected JButton[] createButtons() {
         // TODO
         return new JButton[]{
+                new JButton("Saya Ingin Laundry"),
+                new JButton("Lihat detail nota saya"),
         };
     }
 
@@ -59,6 +61,22 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * */
     private void showDetailNota() {
         // TODO
+        Member loginMember = getLoggedInMember();
+        Nota[] notaLoginMember = loginMember.getNotaList();
+        String text = "";
+        for (Nota nota:notaLoginMember){
+            text += nota.toString();
+            text += "\n";
+        }
+
+        JTextArea textArea = new JTextArea(text);
+        textArea.setColumns(30);
+        textArea.setRows(30);
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
+        textArea.setSize(textArea.getPreferredSize().width, textArea.getPreferredSize().height);
+        JOptionPane.showMessageDialog(this,new JScrollPane(textArea),
+                "List Nota",JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
@@ -67,6 +85,8 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * */
     private void createNota() {
         // TODO
+        MainFrame mainFrame = MainFrame.getInstance();
+        mainFrame.navigateTo(CreateNotaGUI.KEY);
     }
 
 }

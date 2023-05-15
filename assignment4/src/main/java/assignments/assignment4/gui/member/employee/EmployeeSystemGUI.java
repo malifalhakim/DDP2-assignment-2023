@@ -32,6 +32,8 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
     protected JButton[] createButtons() {
         // TODO
         return new JButton[]{
+                new JButton("It's Nyuci time!"),
+                new JButton("Display List Nota")
         };
     }
 
@@ -55,6 +57,15 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
      * */
     private void displayNota() {
         // TODO
+        Nota[] listOfNota = NotaManager.notaList;
+        String pesan = "";
+        for (Nota nota:listOfNota){
+            pesan += nota.getNotaStatus();
+            pesan += "\n";
+        }
+
+        JOptionPane.showMessageDialog(this,pesan,"List Nota",JOptionPane.INFORMATION_MESSAGE);
+
     }
 
     /**
@@ -63,5 +74,15 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
      * */
     private void cuci() {
         // TODO
+        Nota[] listOfNota = NotaManager.notaList;
+        String pesan = "";
+        for (Nota nota:listOfNota){
+            pesan += nota.kerjakan();
+            pesan += "\n";
+        }
+
+        JOptionPane.showMessageDialog(this,String.format("Stand back! %s beginning to nyuci!",loggedInMember.getNama()),
+                "Nyuci time",JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this,pesan,"Nyuci Result",JOptionPane.INFORMATION_MESSAGE);
     }
 }

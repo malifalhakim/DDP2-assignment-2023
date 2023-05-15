@@ -89,6 +89,13 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable{
      * */
     public boolean login(String id, String password) {
         // TODO
+        Member member = this.systemCLI.authUser(id,password);
+        if (member != null){
+            welcomeLabel.setText(String.format("Welcome! %s",member.getNama()));
+            loggedInAsLabel.setText(String.format("Logged in as %s",member.getId()));
+            this.loggedInMember = member;
+            return true;
+        }
         return false;
     }
 

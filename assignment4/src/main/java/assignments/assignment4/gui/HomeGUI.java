@@ -38,41 +38,43 @@ public class HomeGUI extends JPanel {
      * */
     private void initGUI() {
         GridBagConstraints constr = new GridBagConstraints();
+        constr.anchor = GridBagConstraints.NORTH;
+        constr.insets = new Insets(10,10,10,10);
 
         titleLabel = new JLabel("Selamat Datang di CuciCuci System!");
         constr.gridx = 2;
         constr.gridy = 0;
         constr.gridwidth = 2;
-        mainPanel.add(titleLabel);
+        mainPanel.add(titleLabel,constr);
 
         loginButton = new JButton("Login");
         constr.gridx = 2;
         constr.gridy = 2;
         constr.gridwidth = 2;
-        mainPanel.add(loginButton);
+        mainPanel.add(loginButton,constr);
 
         registerButton = new JButton("Register");
         constr.gridx = 2;
         constr.gridy = 4;
         constr.gridwidth = 2;
-        mainPanel.add(registerButton);
+        mainPanel.add(registerButton,constr);
 
         toNextDayButton = new JButton("Next Day");
         constr.gridx = 2;
         constr.gridy = 6;
         constr.gridwidth = 2;
-        mainPanel.add(toNextDayButton);
+        mainPanel.add(toNextDayButton,constr);
 
         dateLabel = new JLabel(NotaManager.fmt.format(NotaManager.cal.getTime()));
         constr.gridx = 2;
         constr.gridy = 8;
         constr.gridwidth = 2;
-        mainPanel.add(dateLabel);
+        mainPanel.add(dateLabel,constr);
 
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                handleToLogin();
             }
         });
 
@@ -80,6 +82,13 @@ public class HomeGUI extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 handleToRegister();
+            }
+        });
+
+        toNextDayButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleNextDay();
             }
         });
     }
