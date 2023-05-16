@@ -7,7 +7,6 @@ import assignments.assignment4.MainFrame;
 import assignments.assignment4.gui.member.AbstractMemberGUI;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class MemberSystemGUI extends AbstractMemberGUI {
@@ -61,6 +60,7 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * */
     private void showDetailNota() {
         // TODO
+        // Mendapatkan detail nota keseluruhan
         Member loginMember = getLoggedInMember();
         Nota[] notaLoginMember = loginMember.getNotaList();
         String text = "";
@@ -69,12 +69,18 @@ public class MemberSystemGUI extends AbstractMemberGUI {
             text += "\n";
         }
 
+        if (text.equals("")){
+            text = "Belum pernah laundry di CuciCuci, hiks:(";
+        }
+
+        // Membuat object text area yang berisi detail Nota
         JTextArea textArea = new JTextArea(text);
-        textArea.setColumns(30);
-        textArea.setRows(30);
+        textArea.setColumns(45);
+        textArea.setRows(20);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         textArea.setSize(textArea.getPreferredSize().width, textArea.getPreferredSize().height);
+
         JOptionPane.showMessageDialog(this,new JScrollPane(textArea),
                 "List Nota",JOptionPane.INFORMATION_MESSAGE);
     }

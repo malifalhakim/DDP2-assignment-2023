@@ -5,8 +5,6 @@ import assignments.assignment4.MainFrame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import static assignments.assignment3.nota.NotaManager.toNextDay;
 
@@ -20,10 +18,10 @@ public class HomeGUI extends JPanel {
     private JButton toNextDayButton;
 
     public HomeGUI(){
-        super(new BorderLayout()); // Setup layout, Feel free to make any changes
+        super(new BorderLayout()); // Setup layout
 
-        // Set up main panel, Feel free to make any changes
-        mainPanel = new JPanel(new GridBagLayout());
+        // Set up main panel dan inisiasi component-nya
+        mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         initGUI();
@@ -33,64 +31,44 @@ public class HomeGUI extends JPanel {
 
     /**
      * Method untuk menginisialisasi GUI.
-     * Selama funsionalitas sesuai dengan soal, tidak apa apa tidak 100% sama.
-     * Be creative and have fun!
      * */
     private void initGUI() {
-        GridBagConstraints constr = new GridBagConstraints();
-        constr.anchor = GridBagConstraints.NORTH;
-        constr.insets = new Insets(10,10,10,10);
+        // Membuat Panel untuk component Button
+        JPanel buttonPanel = new JPanel(new GridBagLayout());
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        mainPanel.add(buttonPanel,BorderLayout.CENTER);
 
+        // Menambahkan semua component ke mainPanel
         titleLabel = new JLabel("Selamat Datang di CuciCuci System!");
-        constr.gridx = 2;
-        constr.gridy = 0;
+        titleLabel.setHorizontalAlignment(JLabel.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        mainPanel.add(titleLabel,BorderLayout.NORTH);
+
+        dateLabel = new JLabel("Hari ini:" + NotaManager.fmt.format(NotaManager.cal.getTime()));
+        dateLabel.setHorizontalAlignment(JLabel.CENTER);
+        mainPanel.add(dateLabel,BorderLayout.SOUTH);
+
+        GridBagConstraints constr = new GridBagConstraints();
         constr.gridwidth = 2;
-        mainPanel.add(titleLabel,constr);
+        constr.gridx = 0;
+        constr.gridy = GridBagConstraints.RELATIVE;
+        constr.fill = GridBagConstraints.HORIZONTAL;
+        constr.insets = new Insets(20,10,20,10);
 
         loginButton = new JButton("Login");
-        constr.gridx = 2;
-        constr.gridy = 2;
-        constr.gridwidth = 2;
-        mainPanel.add(loginButton,constr);
+        buttonPanel.add(loginButton,constr);
 
         registerButton = new JButton("Register");
-        constr.gridx = 2;
-        constr.gridy = 4;
-        constr.gridwidth = 2;
-        mainPanel.add(registerButton,constr);
+        buttonPanel.add(registerButton,constr);
 
         toNextDayButton = new JButton("Next Day");
-        constr.gridx = 2;
-        constr.gridy = 6;
-        constr.gridwidth = 2;
-        mainPanel.add(toNextDayButton,constr);
+        buttonPanel.add(toNextDayButton,constr);
 
-        dateLabel = new JLabel(NotaManager.fmt.format(NotaManager.cal.getTime()));
-        constr.gridx = 2;
-        constr.gridy = 8;
-        constr.gridwidth = 2;
-        mainPanel.add(dateLabel,constr);
+        // Menambahkan listener pada setiap Button
+        loginButton.addActionListener( e -> handleToLogin());
+        registerButton.addActionListener(e -> handleToRegister());
+        toNextDayButton.addActionListener(e -> handleNextDay());
 
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                handleToLogin();
-            }
-        });
-
-        registerButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                handleToRegister();
-            }
-        });
-
-        toNextDayButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                handleNextDay();
-            }
-        });
     }
 
     /**
@@ -116,10 +94,9 @@ public class HomeGUI extends JPanel {
      * Akan dipanggil jika pengguna menekan "toNextDayButton"
      * */
     private void handleNextDay() {
-        JOptionPane optionPane = new JOptionPane();
-        optionPane.showMessageDialog(mainPanel,"Kamu tidur hari ini... zzzz",
+        JOptionPane.showMessageDialog(mainPanel,"Kamu tidur hari ini... zzzz",
                 "Next Day",JOptionPane.INFORMATION_MESSAGE);
         toNextDay();
-        dateLabel.setText(NotaManager.fmt.format(NotaManager.cal.getTime()));
+        dateLabel.setText("Hari ini:" + NotaManager.fmt.format(NotaManager.cal.getTime()));
     }
 }

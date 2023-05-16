@@ -6,7 +6,6 @@ import assignments.assignment4.MainFrame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public abstract class AbstractMemberGUI extends JPanel implements Loginable{
@@ -35,7 +34,6 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable{
     /**
      * Membuat panel button yang akan ditampilkan pada Panel ini.
      * Buttons dan ActionListeners akan disupply oleh method createButtons() & createActionListeners() respectively.
-     * <p> Feel free to make any changes. Be creative and have fun!
      *
      * @return JPanel yang di dalamnya berisi Buttons.
      * */
@@ -64,13 +62,9 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable{
         }
 
         JButton logoutButton = new JButton("Logout");
-        logoutButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                MainFrame.getInstance().logout();
-            }
-        });
+        logoutButton.addActionListener(e -> MainFrame.getInstance().logout());
         buttonsPanel.add(logoutButton, gbc);
+
         return buttonsPanel;
     }
 
@@ -90,6 +84,7 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable{
     public boolean login(String id, String password) {
         // TODO
         Member member = this.systemCLI.authUser(id,password);
+
         if (member != null){
             welcomeLabel.setText(String.format("Welcome! %s",member.getNama()));
             loggedInAsLabel.setText(String.format("Logged in as %s",member.getId()));

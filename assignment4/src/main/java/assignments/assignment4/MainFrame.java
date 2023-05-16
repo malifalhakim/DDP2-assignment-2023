@@ -32,11 +32,13 @@ public class MainFrame extends JFrame{
 
     private MainFrame(){
         super("CuciCuciSystem");
-        // for context dari 2 employee baru ini : https://ristek.link/karyawan-baru-cucicuci
+        // Menambah 2 Employee Baru
         employeeSystem.addEmployee(new Employee[]{
                 new Employee("delta Epsilon Huha Huha", "ImplicitDiff"),
                 new Employee("Regret", "FansBeratKanaArima")
         });
+
+        // Inisiasi Panel Halaman
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(700, 432);
         setVisible(true);
@@ -51,8 +53,6 @@ public class MainFrame extends JFrame{
 
     /**
      * Method untuk menginisialisasi GUI.
-     * Selama funsionalitas sesuai dengan soal, tidak apa apa tidak 100% sama.
-     * Be creative and have fun!
      * */
     private void initGUI() {
         mainPanel.add(homeGUI, HomeGUI.KEY);

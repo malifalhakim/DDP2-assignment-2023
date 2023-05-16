@@ -57,6 +57,7 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
      * */
     private void displayNota() {
         // TODO
+        // Mendapatkan seluruh pesan status nota
         Nota[] listOfNota = NotaManager.notaList;
         String pesan = "";
         for (Nota nota:listOfNota){
@@ -64,7 +65,12 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
             pesan += "\n";
         }
 
-        JOptionPane.showMessageDialog(this,pesan,"List Nota",JOptionPane.INFORMATION_MESSAGE);
+        if (!pesan.equals("")){
+            JOptionPane.showMessageDialog(this,pesan,"List Nota",JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this,"Belum ada nota!","List Nota",JOptionPane.ERROR_MESSAGE);
+        }
+
 
     }
 
@@ -74,6 +80,7 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
      * */
     private void cuci() {
         // TODO
+        // Mendapatkan seluruh pesan ketika pengerjaan nota
         Nota[] listOfNota = NotaManager.notaList;
         String pesan = "";
         for (Nota nota:listOfNota){
@@ -83,6 +90,11 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
 
         JOptionPane.showMessageDialog(this,String.format("Stand back! %s beginning to nyuci!",loggedInMember.getNama()),
                 "Nyuci time",JOptionPane.INFORMATION_MESSAGE);
-        JOptionPane.showMessageDialog(this,pesan,"Nyuci Result",JOptionPane.INFORMATION_MESSAGE);
+        if (pesan.equals("")){
+            JOptionPane.showMessageDialog(this,"nothing to cuci here!","Nyuci Result",
+                    JOptionPane.ERROR_MESSAGE);
+        } else{
+            JOptionPane.showMessageDialog(this,pesan,"Nyuci Result",JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 }

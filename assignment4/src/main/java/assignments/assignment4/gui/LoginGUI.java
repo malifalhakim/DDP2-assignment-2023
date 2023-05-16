@@ -10,8 +10,6 @@ import assignments.assignment4.gui.member.member.MemberSystemGUI;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class LoginGUI extends JPanel {
     public static final String KEY = "LOGIN";
@@ -25,76 +23,55 @@ public class LoginGUI extends JPanel {
     private LoginManager loginManager;
 
     public LoginGUI(LoginManager loginManager) {
-        super(new BorderLayout()); // Setup layout, Feel free to make any changes
+        super(new BorderLayout()); // Setup layout
         this.loginManager = loginManager;
 
-        // Set up main panel, Feel free to make any changes
+        // Set up main panel
         mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         initGUI();
-
         add(mainPanel, BorderLayout.CENTER);
     }
 
     /**
      * Method untuk menginisialisasi GUI.
-     * Selama funsionalitas sesuai dengan soal, tidak apa apa tidak 100% sama.
-     * Be creative and have fun!
      * */
     private void initGUI() {
         // TODO
+        // Menambahkan semua component pada mainPanel
         GridBagConstraints constr = new GridBagConstraints();
+        constr.gridx = 0;
+        constr.gridy = GridBagConstraints.RELATIVE;
+        constr.fill = GridBagConstraints.HORIZONTAL;
+        constr.anchor = GridBagConstraints.CENTER;
+        constr.weightx = 1.0;
+        constr.weighty = 1.0;
+        constr.insets = new Insets(10,10,10,10);
 
         idLabel = new JLabel("Masukan ID Anda:");
-        constr.gridx = 0;
-        constr.gridy = 0;
-        constr.gridwidth = 1;
-        mainPanel.add(idLabel);
+        mainPanel.add(idLabel,constr);
 
         idTextField = new JTextField();
-        constr.gridx = 0;
-        constr.gridy = 2;
-        constr.gridwidth = 5;
-        mainPanel.add(idTextField);
+        mainPanel.add(idTextField,constr);
 
         passwordLabel = new JLabel("Masukan password Anda:");
-        constr.gridx = 0;
-        constr.gridy = 4;
-        constr.gridwidth = 1;
-        mainPanel.add(passwordLabel);
+        mainPanel.add(passwordLabel,constr);
 
         passwordField = new JPasswordField();
-        constr.gridx = 0;
-        constr.gridy = 6;
-        constr.gridwidth = 5;
-        mainPanel.add(passwordField);
+        mainPanel.add(passwordField,constr);
+
+        constr.fill = GridBagConstraints.NONE;
 
         loginButton = new JButton("Login");
-        constr.gridx = 3;
-        constr.gridy = 8;
-        constr.gridwidth = 1;
-        mainPanel.add(loginButton);
+        mainPanel.add(loginButton,constr);
 
         backButton = new JButton("Kembali");
-        constr.gridx = 3;
-        constr.gridy = 10;
-        constr.gridwidth = 1;
-        mainPanel.add(backButton);
+        mainPanel.add(backButton,constr);
 
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                handleLogin();
-            }
-        });
-
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                handleBack();
-            }
-        });
+        // Menambahkan listener pada setiap Button
+        loginButton.addActionListener(e -> handleLogin());
+        backButton.addActionListener(e -> handleBack());
     }
 
     /**
@@ -115,17 +92,18 @@ public class LoginGUI extends JPanel {
     private void handleLogin() {
         MainFrame mainFrame = MainFrame.getInstance();
         boolean isValid = mainFrame.login(idTextField.getText(),String.valueOf(passwordField.getPassword()));
+
         if (isValid){
             SystemCLI systemCLI = loginManager.getSystem(idTextField.getText());
-            idTextField.setText("");
-            passwordField.setText("");
             if (systemCLI instanceof MemberSystem)
                 mainFrame.navigateTo(MemberSystemGUI.KEY);
             else if (systemCLI instanceof EmployeeSystem)
                 mainFrame.navigateTo(EmployeeSystemGUI.KEY);
         } else{
-            JOptionPane optionPane = new JOptionPane();
-            optionPane.showMessageDialog(mainPanel,"ID atau password anda salah","Login Gagal",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(mainPanel,"ID atau password anda salah","Login Gagal",
+                    JOptionPane.ERROR_MESSAGE);
         }
+        idTextField.setText("");
+        passwordField.setText("");
     }
 }
