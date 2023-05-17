@@ -59,7 +59,6 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * Akan dipanggil jika pengguna menekan button pertama pada createButtons
      * */
     private void showDetailNota() {
-        // TODO
         // Mendapatkan detail nota keseluruhan
         Member loginMember = getLoggedInMember();
         Nota[] notaLoginMember = loginMember.getNotaList();
@@ -69,6 +68,7 @@ public class MemberSystemGUI extends AbstractMemberGUI {
             text += "\n";
         }
 
+        // Cek nota ada atau tidak
         if (text.equals("")){
             text = "Belum pernah laundry di CuciCuci, hiks:(";
         }
@@ -90,7 +90,6 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * Akan dipanggil jika pengguna menekan button kedua pada createButtons
      * */
     private void createNota() {
-        // TODO
         MainFrame mainFrame = MainFrame.getInstance();
         mainFrame.navigateTo(CreateNotaGUI.KEY);
     }

@@ -38,7 +38,7 @@ public class MainFrame extends JFrame{
                 new Employee("Regret", "FansBeratKanaArima")
         });
 
-        // Inisiasi Panel Halaman
+        // Inisiasi Halaman-halaman panel
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(700, 432);
         setVisible(true);
@@ -53,6 +53,7 @@ public class MainFrame extends JFrame{
 
     /**
      * Method untuk menginisialisasi GUI.
+     * Menambah panel halaman pada frame utama
      * */
     private void initGUI() {
         mainPanel.add(homeGUI, HomeGUI.KEY);
@@ -82,7 +83,6 @@ public class MainFrame extends JFrame{
      * @param page -> key dari halaman yang diinginkan.
      * */
     public void navigateTo(String page){
-        // TODO
         cards.show(mainPanel,page);
     }
 
@@ -97,9 +97,7 @@ public class MainFrame extends JFrame{
      * @return boolean yang menandakan apakah login berhasil atau gagal.
      * */
     public boolean login(String id, String password){
-        for (Loginable panel:
-                loginablePanel) {
-            // TODO
+        for (Loginable panel: loginablePanel) {
             if (panel.login(id,password))
                 return true;
         }
@@ -111,8 +109,7 @@ public class MainFrame extends JFrame{
      * Method untuk logout dari sistem, kemudian menampilkan halaman Home.
      * */
     public void logout(){
-        for (Loginable panel:
-                loginablePanel) {
+        for (Loginable panel: loginablePanel) {
             panel.logout();
         }
         navigateTo(HomeGUI.KEY);

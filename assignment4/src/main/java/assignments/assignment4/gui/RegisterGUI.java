@@ -3,7 +3,6 @@ package assignments.assignment4.gui;
 import assignments.assignment3.LoginManager;
 import assignments.assignment3.user.Member;
 import assignments.assignment4.MainFrame;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -34,9 +33,9 @@ public class RegisterGUI extends JPanel {
 
     /**
      * Method untuk menginisialisasi GUI.
+     * Menambahkan component yang diperlukan pada mainPanel
      * */
     private void initGUI() {
-        // TODO
         // Menambahkan component pada mainPanel
         GridBagConstraints constr = new GridBagConstraints();
         constr.gridx = 0;
@@ -95,7 +94,6 @@ public class RegisterGUI extends JPanel {
     * Akan dipanggil jika pengguna menekan "registerButton"
     * */
     private void handleRegister() {
-        // TODO
         String name = nameTextField.getText();
         String phoneNumber = phoneTextField.getText();
         String password = String.valueOf(passwordField.getPassword());
@@ -120,11 +118,12 @@ public class RegisterGUI extends JPanel {
         MainFrame mainFrame = MainFrame.getInstance();
 
         if (registeredMember == null){
+            // jika member sudah ada ketika register
             JOptionPane.showMessageDialog(mainPanel,String.format("User dengan nama %s dan %s sudah ada",name,phoneNumber),
                     "Registration Failed",JOptionPane.ERROR_MESSAGE);
             mainFrame.navigateTo(HomeGUI.KEY);
         } else{
-            String id = generateId(name,phoneNumber);
+            String id = generateId(name,phoneNumber); // generate ID
             JTextField pesanId = new JTextField(String.format("Berhasil membuat user dengan ID %s!",id));
             pesanId.setEditable(false);
             JOptionPane.showMessageDialog(mainPanel,pesanId,"Berhasil",JOptionPane.INFORMATION_MESSAGE);
@@ -136,6 +135,9 @@ public class RegisterGUI extends JPanel {
         passwordField.setText("");
     }
 
+    /**
+     * Mengecek semua char di string adalah digit atau bukan
+     */
     private static boolean isNumeric(String str) {
         for (char c : str.toCharArray()) {
             if (!Character.isDigit(c))
@@ -144,6 +146,9 @@ public class RegisterGUI extends JPanel {
         return true;
     }
 
+    /**
+     * Generate ID berdasarkan nama dan noHp member
+     */
     public static String generateId(String nama, String nomorHP) {
         String id = "";
         id += (nama.split(" ")[0] + "-").toUpperCase();

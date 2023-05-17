@@ -29,24 +29,25 @@ public class CreateNotaGUI extends JPanel {
     private final MemberSystemGUI memberSystemGUI;
 
     public CreateNotaGUI(MemberSystemGUI memberSystemGUI) {
+        // set layout dan properti object CreateNotaGUI
         super(new BorderLayout());
         this.memberSystemGUI = memberSystemGUI;
         this.fmt = NotaManager.fmt;
         this.cal = NotaManager.cal;
 
+        // Set up main panel dan component-nya
         mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
-        // Set up main panel dan component-nya
         initGUI();
         add(mainPanel,BorderLayout.CENTER);
     }
 
     /**
      * Method untuk menginisialisasi GUI.
+     * Menambahkan component-component pada mainPanel
      * */
     private void initGUI() {
-        // TODO
         // Menambahkan component pada mainPanel
         GridBagConstraints constr = new GridBagConstraints();
         constr.anchor = GridBagConstraints.CENTER;
@@ -66,7 +67,7 @@ public class CreateNotaGUI extends JPanel {
         constr.gridwidth = 1;
         constr.weightx = 1.0;
         mainPanel.add(paketComboBox,constr);
-        paketComboBox.setSelectedIndex(0);
+        paketComboBox.setSelectedIndex(0);  // set 'Express' sebagai default value combo box
 
         showPaketButton = new JButton("Show Paket");
         mainPanel.add(showPaketButton,constr);
@@ -130,7 +131,6 @@ public class CreateNotaGUI extends JPanel {
      * Akan dipanggil jika pengguna menekan "createNotaButton"
      * */
     private void createNota() {
-        // TODO
         String paket = String.valueOf(paketComboBox.getSelectedItem());
 
         // Mengambil dan mengecek input berat
@@ -158,10 +158,11 @@ public class CreateNotaGUI extends JPanel {
         }
 
 
+        // Membuat dan menambahkan Nota pada logginMember
         Member loggedInMember = this.memberSystemGUI.getLoggedInMember();
         Nota notaBaru = new Nota(loggedInMember,berat,paket,this.fmt.format(this.cal.getTime()));
 
-
+        // Cek dan tambah service yang diinginkan member
         if (setrikaCheckBox.isSelected())
             notaBaru.addService(new SetrikaService());
         if (antarCheckBox.isSelected())
@@ -171,6 +172,8 @@ public class CreateNotaGUI extends JPanel {
         NotaManager.addNota(notaBaru);
 
         JOptionPane.showMessageDialog(this,"Nota berhasil dibuat","Berhasil!",JOptionPane.INFORMATION_MESSAGE);
+
+        // Kembalikan semua input field ke awal
         paketComboBox.setSelectedIndex(0);
         beratTextField.setText("");
         setrikaCheckBox.setSelected(false);
@@ -182,11 +185,12 @@ public class CreateNotaGUI extends JPanel {
      * Akan dipanggil jika pengguna menekan "backButton"
      * */
     private void handleBack() {
-        // TODO
+        // Kembalikan semua input field ke awal
         paketComboBox.setSelectedIndex(0);
         beratTextField.setText("");
         antarCheckBox.setSelected(false);
         setrikaCheckBox.setSelected(false);
+
         MainFrame mainFrame = MainFrame.getInstance();
         mainFrame.navigateTo(MemberSystemGUI.KEY);
     }

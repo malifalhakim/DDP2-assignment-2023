@@ -7,7 +7,6 @@ import assignments.assignment3.user.menu.SystemCLI;
 import assignments.assignment4.MainFrame;
 import assignments.assignment4.gui.member.employee.EmployeeSystemGUI;
 import assignments.assignment4.gui.member.member.MemberSystemGUI;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -36,9 +35,9 @@ public class LoginGUI extends JPanel {
 
     /**
      * Method untuk menginisialisasi GUI.
+     * Menambahkan semua component pada mainPanel dengan GridBagLayout
      * */
     private void initGUI() {
-        // TODO
         // Menambahkan semua component pada mainPanel
         GridBagConstraints constr = new GridBagConstraints();
         constr.gridx = 0;
@@ -91,10 +90,11 @@ public class LoginGUI extends JPanel {
      * */
     private void handleLogin() {
         MainFrame mainFrame = MainFrame.getInstance();
+        // Cek ID dan Password terdapat dalam memberSystem atau EmployeeSystem
         boolean isValid = mainFrame.login(idTextField.getText(),String.valueOf(passwordField.getPassword()));
 
         if (isValid){
-            SystemCLI systemCLI = loginManager.getSystem(idTextField.getText());
+            SystemCLI systemCLI = loginManager.getSystem(idTextField.getText()); // Mendapat SystemCLI sesuai tipe ID
             if (systemCLI instanceof MemberSystem)
                 mainFrame.navigateTo(MemberSystemGUI.KEY);
             else if (systemCLI instanceof EmployeeSystem)
@@ -103,6 +103,7 @@ public class LoginGUI extends JPanel {
             JOptionPane.showMessageDialog(mainPanel,"ID atau password anda salah","Login Gagal",
                     JOptionPane.ERROR_MESSAGE);
         }
+        // Kosongkan Field
         idTextField.setText("");
         passwordField.setText("");
     }

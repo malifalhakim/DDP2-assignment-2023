@@ -2,7 +2,6 @@ package assignments.assignment4.gui.member.employee;
 
 import assignments.assignment3.nota.Nota;
 import assignments.assignment3.nota.NotaManager;
-
 import assignments.assignment3.user.menu.SystemCLI;
 import assignments.assignment4.gui.member.AbstractMemberGUI;
 
@@ -30,7 +29,6 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
      * */
     @Override
     protected JButton[] createButtons() {
-        // TODO
         return new JButton[]{
                 new JButton("It's Nyuci time!"),
                 new JButton("Display List Nota")
@@ -56,7 +54,6 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
      * Akan dipanggil jika pengguna menekan button pertama pada createButtons
      * */
     private void displayNota() {
-        // TODO
         // Mendapatkan seluruh pesan status nota
         Nota[] listOfNota = NotaManager.notaList;
         String pesan = "";
@@ -65,6 +62,7 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
             pesan += "\n";
         }
 
+        // Cek pesan kosong (nota belum ada) atau tidak
         if (!pesan.equals("")){
             JOptionPane.showMessageDialog(this,pesan,"List Nota",JOptionPane.INFORMATION_MESSAGE);
         } else {
@@ -79,7 +77,6 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
      * Akan dipanggil jika pengguna menekan button kedua pada createButtons
      * */
     private void cuci() {
-        // TODO
         // Mendapatkan seluruh pesan ketika pengerjaan nota
         Nota[] listOfNota = NotaManager.notaList;
         String pesan = "";
@@ -90,6 +87,8 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
 
         JOptionPane.showMessageDialog(this,String.format("Stand back! %s beginning to nyuci!",loggedInMember.getNama()),
                 "Nyuci time",JOptionPane.INFORMATION_MESSAGE);
+
+        // Cek apakah ada nota yang dikerjakan atau tidak
         if (pesan.equals("")){
             JOptionPane.showMessageDialog(this,"nothing to cuci here!","Nyuci Result",
                     JOptionPane.ERROR_MESSAGE);
