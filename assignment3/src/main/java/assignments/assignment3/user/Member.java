@@ -2,69 +2,44 @@ package assignments.assignment3.user;
 
 import assignments.assignment3.nota.Nota;
 
-import java.util.ArrayList;
-
 public class Member {
-    // Data Fields
     protected String id;
     protected String password;
     protected String nama;
-    protected ArrayList<Nota> notaList = new ArrayList<>(); // List nota laundry dari suatu pelanggan
+    protected Nota[] notaList = new Nota[0];
 
-    // Constructor
     public Member(String nama, String id, String password) {
         this.nama = nama;
         this.id = id;
         this.password = password;
     }
 
-    // Methods
-
-    /**
-     * Method otentikasi member dengan ID dan password yang diberikan.
-     *
-     * @param id -> ID anggota yang akan diautentikasi.
-     * @param password -> password anggota untuk mengautentikasi.
-     * @return true jika ID dan password sesuai dengan instance member, false jika tidak.
-     */
     public boolean login(String id, String password) {
         return id.equals(this.id) && authenticate(password);
     }
 
-    /**
-     * Menambahkan nota baru ke NotaList instance member.
-     *
-     * @param nota Nota object untuk ditambahkan.
-     */
-    public void addNota(Nota nota) {
-        this.notaList.add(nota);
-    }
-
-    /**
-     * Method otentikasi member dengan password yang diberikan.
-     *
-     * @param password -> sandi password anggota untuk mengautentikasi.
-     * @return true jika ID dan password sesuai dengan instance member, false jika tidak.
-     */
-    protected boolean authenticate(String password) {
-        return password.equals(this.password);
-    }
-
-    // Dibawah ini adalah getter
-
     public String getNama() {
-        return this.nama;
+        return nama;
     }
 
     public String getId() {
-        return this.id;
+        return id;
     }
 
     public Nota[] getNotaList() {
-        Nota[] arrayNota = new Nota[this.notaList.size()];
-        for (int i = 0; i < this.notaList.size(); i++){
-            arrayNota[i] = this.notaList.get(i);
-        }
-        return arrayNota;
+        return notaList;
+    }
+
+    public void addNota(Nota nota){
+        int n = notaList.length;
+        Nota[] newarr = new Nota[n + 1];
+        System.arraycopy(notaList, 0, newarr, 0, n);
+
+        newarr[n] = nota;
+        notaList = newarr;
+    }
+
+    protected boolean authenticate(String password) {
+        return this.password.equals(password);
     }
 }

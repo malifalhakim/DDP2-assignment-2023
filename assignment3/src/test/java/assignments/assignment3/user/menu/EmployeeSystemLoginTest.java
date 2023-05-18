@@ -2,6 +2,7 @@ package assignments.assignment3.user.menu;
 
 import assignments.assignment3.user.Employee;
 import assignments.assignment3.user.Member;
+import assignments.assignment3.user.menu.EmployeeSystem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

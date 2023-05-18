@@ -6,7 +6,6 @@ import assignments.assignment3.user.menu.EmployeeSystem;
 import assignments.assignment3.user.menu.MemberSystem;
 import assignments.assignment3.user.menu.SystemCLI;
 
-
 public class LoginManager {
     private final EmployeeSystem employeeSystem;
     private final MemberSystem memberSystem;
@@ -16,12 +15,6 @@ public class LoginManager {
         this.memberSystem = memberSystem;
     }
 
-    /**
-     * Method mapping dari ke SystemCLI yang sesuai.
-     *
-     * @param id -> ID dari user yang akan menggunakan SystemCLI
-     * @return SystemCLI object yang sesuai dengan ID, null if  ID tidak ditemukan.
-     */
     public SystemCLI getSystem(String id){
         if(memberSystem.isMemberExist(id)){
             return memberSystem;
@@ -32,23 +25,14 @@ public class LoginManager {
         return null;
     }
 
-    /**
-     * Mendaftarkan member baru dengan informasi yang diberikan.
-     *
-     * @param nama -> Nama member.
-     * @param noHp -> Nomor handphone member.
-     * @param password -> Password akun member.
-     * @return Member object yang berhasil mendaftar, return null jika gagal mendaftar.
-     */
     public Member register(String nama, String noHp, String password) {
-        String idMember = NotaGenerator.generateId(nama,noHp);
-        boolean hasExisted = memberSystem.isMemberExist(idMember); // Cek apakah ID tersebut telah ada atau tidak
-        if (!hasExisted){
-            Member member = new Member(nama,idMember,password);
-            memberSystem.addMember(member);
-            return member;
+        String id = NotaGenerator.generateId(nama, noHp);
+        if(memberSystem.isMemberExist(id)){
+            return null;
         }
-        return null;
-    }
 
+        Member member = new Member(nama, id, password);
+        memberSystem.addMember(member);
+        return member;
+    }
 }

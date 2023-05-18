@@ -1,156 +1,143 @@
 package assignments.assignment3.nota;
+
+import assignments.assignment1.NotaGenerator;
 import assignments.assignment3.nota.service.CuciService;
 import assignments.assignment3.nota.service.LaundryService;
 import assignments.assignment3.user.Member;
-import java.util.ArrayList;
 
-import static assignments.assignment1.NotaGenerator.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import static assignments.assignment1.NotaGenerator.toHargaPaket;
+import static assignments.assignment1.NotaGenerator.toHariPaket;
 
 public class Nota {
-    // Data Fields
-    private Member member;
-    private String paket;
-    private ArrayList<LaundryService> services; // List Service yang digunakan
-    private long baseHarga; // Harga per-kg dari setiap paket
+    private final Member member;
+    private final String paket;
+    private LaundryService[] services;
+    private final long baseHarga;
     private int sisaHariPengerjaan;
-    private  int berat;
-    private int id;
-    private String tanggalMasuk;
+    private final int berat;
+    private final int id;
+    private final String tanggalMasuk;
     private boolean isDone;
-    private long hargaKompensasi;
     static public int totalNota;
 
-    // Constructor
     public Nota(Member member, int berat, String paket, String tanggal) {
+        this.id = totalNota;
+        this.paket = paket;
         this.member = member;
         this.berat = berat;
-        this.paket = paket;
-        this.tanggalMasuk = tanggal;
-        this.services = new ArrayList<>();
-        this.sisaHariPengerjaan = toHariPaket(paket);
-        this.id = totalNota++;
         this.baseHarga = toHargaPaket(paket);
-        this.addService(new CuciService()); // Setiap Nota yang dibuat memiliki service jenis Cuci
+        this.sisaHariPengerjaan = toHariPaket(paket);
+        this.services = new LaundryService[]{new CuciService()};
+        isDone = false;
+        totalNota++;
+        tanggalMasuk = tanggal;
     }
 
-    // Methods
+    public String getPaket() {
+        return paket;
+    }
 
-    /**
-     * Menambahkan service (cuci/setrika/antar) pada nota yang dibuat
-     *
-     * @param service -> Jenis service yang ditambahkan pada nota
-     */
+    public int getBerat() {
+        return berat;
+    }
+
+    public String getTanggal() {
+        return tanggalMasuk;
+    }
+
+    public int getSisaHariPengerjaan(){
+        return sisaHariPengerjaan;
+    }
+    public boolean isDone() {
+        return isDone;
+    }
     public void addService(LaundryService service){
-        this.services.add(service);
+        int n = services.length;
+        LaundryService[] newarr = new LaundryService[n + 1];
+        System.arraycopy(services, 0, newarr, 0, n);
+        newarr[n] = service;
+        services = newarr;
     }
 
-    /**
-     * Mengerjakan service yang belum selesai pada nota
-     *
-     * @return String yang memberi tahu service yang sedang dikerjakan
-     */
+    public LaundryService[] getServices(){
+        return services;
+    }
+
     public String kerjakan(){
-        // Mengecek service yang sedang dikerjakan
-        String message = "Sudah selesai.";
-        for (LaundryService service:this.services){
-            if (!service.isDone()){
-                message = service.doWork();
-                break;
+        String message  = String.format("Nota %d : ", id);
+        for (LaundryService service:
+             services) {
+            if(service.isDone()){
+                continue;
             }
-        }
-
-        // Mengecek apakah semua service telah selesai atau tidak
-        this.isDone = true;
-        for (LaundryService service:this.services){
-            if (!service.isDone()){
-                this.isDone = false;
-                break;
+            message += service.doWork();
+            if(service == services[services.length-1]){
+                isDone = true;
             }
-
+            return message;
         }
-        return String.format("Nota %d : %s",this.id,message);
+        return message + "Sudah selesai.";
     }
-
-    /**
-     * Mengupdate nota ke hari berikutnya
-     * Jika nota belum selesai sebelum tanggal yang seharusnya, diberikan uang kompensasi sebesar Rp.2000/hari
-     */
     public void toNextDay() {
-        this.sisaHariPengerjaan--;
-        if ((this.sisaHariPengerjaan < 0) && (!this.isDone) ){
-            this.hargaKompensasi += 2000;
+        if(!isDone){
+            sisaHariPengerjaan--;
         }
     }
 
-    /**
-     * Menghitung harga yang perlu dibayar member untuk suatu nota
-     *
-     * @return harga dalam long. harga merupakan penambahan semua service dan dikurangi harga kompensasi jika ada.
-     */
     public long calculateHarga(){
-        long harga = this.baseHarga * this.berat;
-        for (LaundryService service:this.services){
-            harga += service.getHarga(this.berat);
+        long totalHarga = baseHarga * berat;
+        for (LaundryService service:
+             services) {
+            totalHarga += service.getHarga(berat);
         }
-        harga = harga - this.hargaKompensasi;
-        return (harga >= 0)? harga: 0;
+        if(sisaHariPengerjaan < 0){
+            totalHarga += sisaHariPengerjaan * 2000L;
+        }
+        if(totalHarga < 0){
+            return 0;
+        }
+        return totalHarga;
     }
 
-    /**
-     * Mengecek status nota. Jika semua service telah selesai maka nota telah selesai
-     *
-     * @return "Sudah selesai." jika status nota telah selesai. Jika belum mengembalikan "Belum selesai."
-     */
     public String getNotaStatus(){
-        String message = (this.isDone) ? "Sudah selesai.":"Belum selesai.";
-        return String.format("Nota %d : %s",this.id,message);
+        String message  = String.format("Nota %d : ", id);
+        if(isDone){
+            return message + "Sudah selesai.";
+        }
+        return message + "Belum selesai.";
     }
 
     @Override
     public String toString(){
-        String result;
-        result = String.format("[ID Nota = %d]\n",this.id);
-        result += generateNota(this.member.getId(),this.paket,this.berat,this.tanggalMasuk);
-        result += "\n";
-        result += "--- SERVICE LIST ---\n";
-        for (LaundryService service: this.services){
-            result += String.format("- %s @ Rp.%d\n",service.getServiceName(),service.getHarga(this.berat));
+        StringBuilder nota = new StringBuilder(String.format("[ID Nota = %d]\n", id));
+
+        nota.append(NotaGenerator.generateNota(
+                String.valueOf(member.getId()),
+                paket,
+                berat,
+                tanggalMasuk,
+                false)
+        );
+        nota.append("\n--- SERVICE LIST ---\n");
+        for (LaundryService service:
+             services) {
+            nota.append(String.format("-%s @ Rp.%d\n", service.getServiceName(), service.getHarga(berat)));
         }
-        result += String.format("Harga Akhir: %d",this.calculateHarga());
-        String messageHasilAkhir = (this.hargaKompensasi > 0) ?
-                String.format(" Ada kompensasi keterlambatan %d * 2000 hari",(this.hargaKompensasi / 2000)): "";
-        result += messageHasilAkhir;
-        result += "\n";
-        return result;
-    }
-
-    // Dibawah ini adalah getter
-
-    public String getPaket() {
-        return this.paket;
-    }
-
-    public int getBerat() {
-        return this.berat;
-    }
-
-    public String getTanggal() {
-        return this.tanggalMasuk;
-    }
-
-    public int getSisaHariPengerjaan(){
-        return this.sisaHariPengerjaan;
-    }
-
-    public boolean isDone() {
-        return this.isDone;
-    }
-
-    public LaundryService[] getServices(){
-        LaundryService[] arrayService = new LaundryService[this.services.size()];
-        for (int i = 0; i < this.services.size(); i++){
-            arrayService[i] = this.services.get(i);
+        nota.append("Harga Akhir: ").append(calculateHarga());
+        if(sisaHariPengerjaan < 0){
+            nota.append(String.format(" Ada kompensasi keterlambatan %d * 2000 hari\n", sisaHariPengerjaan * -1));
         }
-        return arrayService;
+        else {
+            nota.append("\n");
+        }
+
+        return nota.toString();
     }
+
+
 }

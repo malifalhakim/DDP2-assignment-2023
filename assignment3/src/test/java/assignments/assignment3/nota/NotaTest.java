@@ -1,5 +1,6 @@
 package assignments.assignment3.nota;
 
+import assignments.assignment1.NotaGenerator;
 import assignments.assignment3.nota.service.AntarService;
 import assignments.assignment3.nota.service.SetrikaService;
 import assignments.assignment3.user.Member;
@@ -60,6 +61,7 @@ class NotaTest {
     @Test
     void testKerjakanAllDone() {
         Nota nota = new Nota(member, berat, paket, tanggal);
+        LaundryService service = nota.getServices()[0];
         nota.kerjakan();
         String expectedMessage = "Nota 0 : Sudah selesai.";
         assertEquals(expectedMessage, nota.kerjakan());
@@ -77,7 +79,7 @@ class NotaTest {
     void testCalculateHarga() {
         Nota nota = new Nota(member, berat, paket, tanggal);
 
-        long expectedHarga = toHargaPaket(paket) * berat + new CuciService().getHarga(berat);
+        long expectedHarga = NotaGenerator.toHargaPaket(paket) * berat + new CuciService().getHarga(berat);
         assertEquals(expectedHarga, nota.calculateHarga());
     }
 
@@ -89,7 +91,7 @@ class NotaTest {
         nota.toNextDay();
         nota.toNextDay();
 
-        long expectedHarga = toHargaPaket(paket) * berat + new CuciService().getHarga(berat) - 2000L;
+        long expectedHarga = NotaGenerator.toHargaPaket(paket) * berat + new CuciService().getHarga(berat) - 1 * 2000L;
         assertTrue(nota.toString().contains("kompensasi"));
         assertEquals(expectedHarga, nota.calculateHarga());
     }
@@ -107,7 +109,7 @@ class NotaTest {
         nota.toNextDay();
         nota.toNextDay();
 
-        long expectedHarga = (toHargaPaket(paket)) + (new SetrikaService()).getHarga(1) + (new AntarService()).getHarga(4);
+        long expectedHarga = (NotaGenerator.toHargaPaket(paket)) + (new SetrikaService()).getHarga(1) + (new AntarService()).getHarga(4);
         assertFalse(nota.toString().contains("kompensasi"));
         assertEquals(expectedHarga, nota.calculateHarga());
     }
@@ -217,16 +219,5 @@ class NotaTest {
                 Harga Akhir: 46500 Ada kompensasi keterlambatan 3 * 2000 hari
                 """.replaceAll("\\s+","");
         assertEquals(expectedOutput, nota.toString().replaceAll("\\s+",""));
-    }
-
-    public static long toHargaPaket(String paket) {
-        paket = paket.toLowerCase();
-        if (paket.equals("express"))
-            return 12000;
-        if (paket.equals("fast"))
-            return 10000;
-        if (paket.equals("reguler"))
-            return 7000;
-        return -1;
     }
 }

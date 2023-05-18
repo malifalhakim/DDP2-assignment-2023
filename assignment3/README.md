@@ -22,7 +22,7 @@ Tugas Pemrograman ini mencakup materi berikut:
 
 ## Dokumen Soal
 
-Dokumen soal dapat diakses melalui [link ini](https://docs.google.com/document/d/12SF_i5OQBMZCaxzQgpRpMDGc8riQQzeDFFaFIuVIuOk/edit?usp=sharing).
+Dokumen soal dapat diakses melalui [link ini](https://docs.google.com/document/d/1cZRl5ejHhXBfwHqB438DQUunr9YPhZR8MCngyTYGmfs/edit?usp=sharing).
 
 ## Persiapan
 
@@ -31,6 +31,7 @@ Silakan ikuti persiapan yang ada pada berkas [`README.md`](../README.md) di
 
 > Template pengerjaan tugas ini disediakan di *path*
 `src\main\java\assignments\assignment3`
+
 ## Menjalankan dan menguji program
 
 > Catatan:<br>
@@ -38,9 +39,10 @@ Silakan ikuti persiapan yang ada pada berkas [`README.md`](../README.md) di
     menggunakan Linux/Mac.
 > - Tanda <kbd>></kbd> pada awal *command* tidak perlu ditulis.
     Digunakan sebagai pembeda antara *command* dan *output*-nya
-    Kamu bisa menjalankan beberapa *task* dengan Gradle melalui IDE atau
-    terminal/Command Prompt.
-    Jalankan *task* tersebut di **root folder** dari repository ini.
+
+Kamu bisa menjalankan beberapa *task* dengan Gradle melalui IDE atau
+terminal/Command Prompt.
+Jalankan *task* tersebut di **root folder** dari repository ini.
 
 Untuk menjalankan program:
 
@@ -66,12 +68,13 @@ Untuk menguji program dengan *test case* yang disediakan:
 ```
 
 > Catatan: <kbd>src\main\java></kbd> tidak perlu ditulis saat menjalankan *command*-nya (hanya menandakan bahwa anda sudah berada di folder src\main\java)
+
 ## Pengumpulan
 
 Simpan pekerjaan kamu, lalu lakukan `git add`, `git commit`, dan `git push`
 sebagaimana dijelaskan pada dokumen
 Getting Started with a Java Project (Latihan Tugas Pemrograman).
-*Push* solusi kamu **sebelum 4 Mei 2023 pukul 23.55**. Disarankan untuk
+*Push* solusi kamu **sebelum 16 Maret 2023 pukul 23.55**. Disarankan untuk
 *push* **sebelum pukul 22.00** untuk mengantisipasi antrean pada GitHub
 Pipelines.
 
@@ -79,12 +82,16 @@ Jangan lupa untuk menambahkan asdos kamu dan dekdepe sebagai *member* di reposit
 Tim pengajar hanya akan menilai pekerjaan kamu berdasarkan ***commit* terbaru**
 yang **sudah di-*push* sebelum waktu dan tanggal yang ditentukan**. *Commit*
 tersebut diidentifikasi dengan memeriksa GitHub Pipelines.
+
 > Catatan: *timestamp* pada GitHub Pipelines tidak pernah bohong.
 > *So, no funny business, please :)*
+
 ## Daftar pekerjaan
+
 ### Daftar pekerjaan wajib
-- [ ] Buat sekurang-kurangnya 1 *commit* yang mengandung progres kamu dalam
-  mengerjakan Tugas Pemrograman 3.
+
+- [ ] Buat sekurang-kurangnya 2 *commit* yang mengandung progres kamu dalam
+  mengerjakan Tugas Pemrograman 2.
 - [ ] *Push* *commit* kamu ke repositori Git *online* yang ada pada proyek
   GitHub kamu.
 - [ ] Implementasikan class `Member` dengan benar.
@@ -96,11 +103,13 @@ tersebut diidentifikasi dengan memeriksa GitHub Pipelines.
 - [ ] Melengkapi fungsionalitas class `MainMenu` dengan benar.
 - [ ] Silakan menambah class atau method yang diperlukan.
 - [ ] Demonstrasikan program kamu ke asdos kamu.
+
+
+
+
 ## Penilaian
-- 30% Fungsionalitas Program 
-- 10% Implementasi Package Service
-- 10% Implementasi Package User
-- 10% Implementasi Package Menu
+
+- TBA
 - 5% Dokumentasi (kejelasan kode)
 - 5% Standar penulisan kode* (kerapian kode)
 - 30% Demo program dengan asisten dosen

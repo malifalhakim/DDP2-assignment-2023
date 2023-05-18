@@ -1,5 +1,6 @@
 package assignments.assignment3;
 
+import assignments.assignment3.nota.NotaManager;
 import assignments.assignment3.user.Member;
 import assignments.assignment3.user.menu.SystemCLI;
 import org.junit.jupiter.api.Test;
