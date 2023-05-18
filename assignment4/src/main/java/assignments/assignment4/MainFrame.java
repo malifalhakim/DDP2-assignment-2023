@@ -1,4 +1,5 @@
 package assignments.assignment4;
+
 import assignments.assignment3.LoginManager;
 import assignments.assignment3.user.Employee;
 import assignments.assignment3.user.menu.EmployeeSystem;
@@ -116,10 +117,7 @@ public class MainFrame extends JFrame{
     }
 
     public static void main(String[] args) {
-        // menampilkan GUI kalian.
-        // Jika ingin tau lebih lanjut mengapa menggunakan SwingUtilities.invokeLater
-        // silakan akses https://stackoverflow.com/questions/6567870/what-does-swingutilities-invokelater-do
-        // Tapi in general kalian tidak usah terlalu overthinking line ini selain fungsi utamanya adalah menampilkan GUI
+        // menampilkan GUI
         SwingUtilities.invokeLater(MainFrame::getInstance);
     }
 }

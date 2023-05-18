@@ -152,7 +152,7 @@ public class CreateNotaGUI extends JPanel {
         }
 
         if (berat == 1){
-            JOptionPane.showMessageDialog(this,"Berat cucian kurang dari 2kg, maka cucian akan dianggap 2 kg",
+            JOptionPane.showMessageDialog(this,"Berat cucian kurang dari 2 kg, maka cucian akan dianggap 2 kg",
                     "Info", JOptionPane.INFORMATION_MESSAGE);
             berat = 2;
         }
@@ -171,7 +171,7 @@ public class CreateNotaGUI extends JPanel {
         loggedInMember.addNota(notaBaru);
         NotaManager.addNota(notaBaru);
 
-        JOptionPane.showMessageDialog(this,"Nota berhasil dibuat","Berhasil!",JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this,"Nota berhasil dibuat!","Berhasil!",JOptionPane.INFORMATION_MESSAGE);
 
         // Kembalikan semua input field ke awal
         paketComboBox.setSelectedIndex(0);

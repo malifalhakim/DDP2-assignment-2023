@@ -7,6 +7,7 @@ import assignments.assignment3.user.menu.SystemCLI;
 import assignments.assignment4.MainFrame;
 import assignments.assignment4.gui.member.employee.EmployeeSystemGUI;
 import assignments.assignment4.gui.member.member.MemberSystemGUI;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -100,7 +101,7 @@ public class LoginGUI extends JPanel {
             else if (systemCLI instanceof EmployeeSystem)
                 mainFrame.navigateTo(EmployeeSystemGUI.KEY);
         } else{
-            JOptionPane.showMessageDialog(mainPanel,"ID atau password anda salah","Login Gagal",
+            JOptionPane.showMessageDialog(mainPanel,"ID atau password invalid","Invalid ID or Password",
                     JOptionPane.ERROR_MESSAGE);
         }
         // Kosongkan Field

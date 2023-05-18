@@ -3,6 +3,7 @@ package assignments.assignment4.gui;
 import assignments.assignment3.LoginManager;
 import assignments.assignment3.user.Member;
 import assignments.assignment4.MainFrame;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -94,7 +95,7 @@ public class RegisterGUI extends JPanel {
     * Akan dipanggil jika pengguna menekan "registerButton"
     * */
     private void handleRegister() {
-        String name = nameTextField.getText();
+        String name = nameTextField.getText().trim();
         String phoneNumber = phoneTextField.getText();
         String password = String.valueOf(passwordField.getPassword());
 
@@ -119,8 +120,8 @@ public class RegisterGUI extends JPanel {
 
         if (registeredMember == null){
             // jika member sudah ada ketika register
-            JOptionPane.showMessageDialog(mainPanel,String.format("User dengan nama %s dan %s sudah ada",name,phoneNumber),
-                    "Registration Failed",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(mainPanel,String.format("User dengan nama %s dan nomor handphone %s " +
+                            "sudah ada",name,phoneNumber), "Registration Failed",JOptionPane.ERROR_MESSAGE);
             mainFrame.navigateTo(HomeGUI.KEY);
         } else{
             String id = generateId(name,phoneNumber); // generate ID

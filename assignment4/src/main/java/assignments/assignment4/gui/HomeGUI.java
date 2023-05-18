@@ -4,6 +4,7 @@ import assignments.assignment3.nota.NotaManager;
 import assignments.assignment4.MainFrame;
 import javax.swing.*;
 import java.awt.*;
+
 import static assignments.assignment3.nota.NotaManager.toNextDay;
 
 public class HomeGUI extends JPanel {
@@ -67,7 +68,6 @@ public class HomeGUI extends JPanel {
         loginButton.addActionListener( e -> handleToLogin());
         registerButton.addActionListener(e -> handleToRegister());
         toNextDayButton.addActionListener(e -> handleNextDay());
-
     }
 
     /**
